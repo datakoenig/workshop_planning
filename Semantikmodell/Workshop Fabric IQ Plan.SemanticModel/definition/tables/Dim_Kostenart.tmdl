@@ -1,0 +1,31 @@
+table Dim_Kostenart
+	lineageTag: 2c1c8c47-55c0-40ba-9e51-e0c6407cc8b5
+
+	column KostenartID
+		dataType: string
+		lineageTag: 8099a16f-a0d4-411c-9bab-33e7ce24c124
+		summarizeBy: none
+		sourceColumn: KostenartID
+
+	column Kostenart
+		dataType: string
+		lineageTag: 86ef54fc-3ce8-41ad-acab-aba3a0084140
+		summarizeBy: none
+		sourceColumn: Kostenart
+
+	column GuVZuordnung
+		dataType: string
+		lineageTag: dfd8d4cb-44da-4a0a-a292-1b92acba646c
+		summarizeBy: none
+		sourceColumn: GuVZuordnung
+
+	partition Dim_Kostenart = m
+		mode: import
+		source =
+				let
+				    Quelle = Csv.Document(File.Contents(Ordner & "Dim_Kostenart.csv"), [Delimiter = ",", Encoding = 65001, QuoteStyle = QuoteStyle.Csv]),
+				    Header = Table.PromoteHeaders(Quelle, [PromoteAllScalars = true]),
+				    Typen = Table.TransformColumnTypes(Header, {{"KostenartID", type text}, {"Kostenart", type text}, {"GuVZuordnung", type text}}, "en-US")
+				in
+				    Typen
+

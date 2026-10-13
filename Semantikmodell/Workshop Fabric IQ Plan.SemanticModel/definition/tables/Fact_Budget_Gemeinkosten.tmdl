@@ -1,0 +1,50 @@
+table Fact_Budget_Gemeinkosten
+	lineageTag: c1f56374-e73d-49d0-9dca-3ee3cea53e09
+
+	column Periode
+		dataType: string
+		lineageTag: 065685b1-6309-4540-9498-c863c596e4b4
+		summarizeBy: none
+		sourceColumn: Periode
+
+	column Szenario
+		dataType: string
+		lineageTag: 21900762-b7ee-4ca1-b62c-457acebf036e
+		summarizeBy: none
+		sourceColumn: Szenario
+
+	column Version
+		dataType: string
+		lineageTag: fefc3ad2-657e-4614-930e-c63dfa3a3eae
+		summarizeBy: none
+		sourceColumn: Version
+
+	column KostenstelleID
+		dataType: string
+		lineageTag: 55e3991a-f26d-4d7e-8b8c-d4cb1990c2f0
+		summarizeBy: none
+		sourceColumn: KostenstelleID
+
+	column KostenartID
+		dataType: string
+		lineageTag: 4f6c8d42-89d6-4258-b89b-6a239cdd603f
+		summarizeBy: none
+		sourceColumn: KostenartID
+
+	column Betrag
+		dataType: double
+		formatString: #,0.00
+		lineageTag: a1c42812-9f08-4562-9570-cb29dbde4346
+		summarizeBy: sum
+		sourceColumn: Betrag
+
+	partition Fact_Budget_Gemeinkosten = m
+		mode: import
+		source =
+				let
+				    Quelle = Csv.Document(File.Contents(Ordner & "Fact_Budget_Gemeinkosten.csv"), [Delimiter = ",", Encoding = 65001, QuoteStyle = QuoteStyle.Csv]),
+				    Header = Table.PromoteHeaders(Quelle, [PromoteAllScalars = true]),
+				    Typen = Table.TransformColumnTypes(Header, {{"Periode", type text}, {"Szenario", type text}, {"Version", type text}, {"KostenstelleID", type text}, {"KostenartID", type text}, {"Betrag", type number}}, "en-US")
+				in
+				    Typen
+

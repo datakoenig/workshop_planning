@@ -1,0 +1,37 @@
+table Berechtigung_KeyAccount
+	lineageTag: 6a8dbbc2-60c9-49a7-88df-44c6d504dd94
+
+	column Benutzer
+		dataType: string
+		lineageTag: 89ff2e5c-a2d6-42c5-b1bb-ffde75cca67e
+		summarizeBy: none
+		sourceColumn: Benutzer
+
+	column Planungsbereich
+		dataType: string
+		lineageTag: 658b3f5a-cb9c-4048-be95-44ed60afcdd7
+		summarizeBy: none
+		sourceColumn: Planungsbereich
+
+	column Recht
+		dataType: string
+		lineageTag: f321fcfc-e5c7-41ed-8bcb-eae798431cc0
+		summarizeBy: none
+		sourceColumn: Recht
+
+	column KeyAccountID
+		dataType: string
+		lineageTag: 138e4b53-09bb-4b2f-9e39-29c4c7a3df92
+		summarizeBy: none
+		sourceColumn: KeyAccountID
+
+	partition Berechtigung_KeyAccount = m
+		mode: import
+		source =
+				let
+				    Quelle = Csv.Document(File.Contents(Ordner & "Berechtigung_KeyAccount.csv"), [Delimiter = ",", Encoding = 65001, QuoteStyle = QuoteStyle.Csv]),
+				    Header = Table.PromoteHeaders(Quelle, [PromoteAllScalars = true]),
+				    Typen = Table.TransformColumnTypes(Header, {{"Benutzer", type text}, {"Planungsbereich", type text}, {"Recht", type text}, {"KeyAccountID", type text}}, "en-US")
+				in
+				    Typen
+

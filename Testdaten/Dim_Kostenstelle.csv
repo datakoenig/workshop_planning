@@ -1,0 +1,9 @@
+﻿KostenstelleID,Kostenstelle,Bereich
+KST100,Vertrieb Inland,Vertrieb
+KST110,Vertrieb Export,Vertrieb
+KST200,Marketing,Vertrieb
+KST300,Logistik,Vertrieb
+KST400,Produktion,Herstellung
+KST500,Einkauf,Herstellung
+KST600,Verwaltung,Verwaltung
+KST700,IT,Verwaltung

@@ -1,0 +1,432 @@
+table Kennzahlen
+	lineageTag: b3dad09d-1f56-4cdc-95f5-525d46e692a0
+
+	measure 'Umsatz Ist' = SUM ( Fact_Absatz_Ist[Umsatz] )
+		formatString: #,0
+		lineageTag: 39ad6fd1-5f21-4468-8eee-41210f39e082
+
+	measure 'Menge Ist' = SUM ( Fact_Absatz_Ist[Menge] )
+		formatString: #,0
+		lineageTag: 6c057d3c-179c-475b-9716-cce24c2c3a03
+
+	measure 'Variable Kosten Ist' = SUM ( Fact_Absatz_Ist[VariableKosten] )
+		formatString: #,0
+		lineageTag: 3fc4c12a-7db8-41af-8b38-3eade2b58876
+
+	measure 'Gemeinkosten Ist' = SUM ( Fact_Gemeinkosten_Ist[Betrag] )
+		formatString: #,0
+		lineageTag: 09eb0937-2bb3-46a1-885f-6aadc1935703
+
+	measure 'Sonstige Erträge Ist' = SUM ( Fact_SonstigeErtraege_Ist[Betrag] )
+		formatString: #,0
+		lineageTag: 9068bf74-af7a-4ae9-a1b5-40298c401a70
+
+	measure 'Deckungsbeitrag Ist' = [Umsatz Ist] - [Variable Kosten Ist]
+		formatString: #,0
+		lineageTag: 2c4c8d08-0017-451f-b4b7-74dbb4f50ff4
+
+	measure 'EBIT Ist' =
+			-- Gemeinkosten und sonstige Erträge nach Umsatzanteil geschlüsselt, damit EBIT je Produktgruppe / Key Account sinnvoll ist
+			[Deckungsbeitrag Ist] - [Gemeinkosten Ist (zugerechnet)] + [Sonstige Erträge Ist (zugerechnet)]
+		formatString: #,0
+		lineageTag: 34e55fa1-a322-4595-b8e7-c98e2ddb7382
+
+	measure 'Umsatzrendite Ist' = DIVIDE ( [EBIT Ist], [Umsatz Ist] )
+		formatString: 0.0 %
+		lineageTag: 001f0868-183b-4d94-8a9e-d550cf36fe02
+
+	measure 'Ziel Umsatzrendite' =
+			VAR _pg = SELECTEDVALUE ( Dim_Produkt[Produktgruppe], "Gesamt" )
+			RETURN LOOKUPVALUE ( Config_Zielwerte[Ziel_Umsatzrendite], Config_Zielwerte[Produktgruppe], _pg )
+		formatString: 0.0 %
+		lineageTag: e81ccba8-c1a3-44b7-85c4-69b06ab01cff
+
+	measure 'Abw. Umsatzrendite zu Ziel (Pp.)' = ( [Umsatzrendite Ist] - [Ziel Umsatzrendite] ) * 100
+		formatString: 0.0
+		lineageTag: 52bb848b-63d9-4e58-b06c-fa3c17bbf4fe
+
+	measure 'Budget Umsatz (gewählt)' = SUM ( Fact_Budget_Absatz[Umsatz] )
+		formatString: #,0
+		lineageTag: bb2b0c9a-6a16-4da0-885a-f73e37c44784
+
+	measure 'Budget Menge (gewählt)' = SUM ( Fact_Budget_Absatz[Menge] )
+		formatString: #,0
+		lineageTag: 197b3afe-a9a2-454d-ace7-0b02d84a9400
+
+	measure 'Budget Gemeinkosten (gewählt)' = SUM ( Fact_Budget_Gemeinkosten[Betrag] )
+		formatString: #,0
+		lineageTag: 9473a373-838c-4dc2-bf0e-aa43d19c6656
+
+	measure 'Budget Umsatz' =
+			-- Ohne Auswahl: Base-Szenario und Version Konsolidiert (IstDefault)
+			VAR _szGewaehlt = ISFILTERED ( Dim_Szenario[Szenario] )
+			VAR _veGewaehlt = ISFILTERED ( Dim_Version[Version] )
+			RETURN
+			    CALCULATE (
+			        SUM ( Fact_Budget_Absatz[Umsatz] ),
+			        FILTER ( VALUES ( Dim_Szenario ), _szGewaehlt || Dim_Szenario[IstDefault] = TRUE () ),
+			        FILTER ( VALUES ( Dim_Version ), _veGewaehlt || Dim_Version[IstDefault] = TRUE () )
+			    )
+		formatString: #,0
+		lineageTag: 1dec1c92-fb03-4b9b-bb66-3ed929eba32c
+
+	measure 'Budget Gemeinkosten' =
+			VAR _szGewaehlt = ISFILTERED ( Dim_Szenario[Szenario] )
+			VAR _veGewaehlt = ISFILTERED ( Dim_Version[Version] )
+			RETURN
+			    CALCULATE (
+			        SUM ( Fact_Budget_Gemeinkosten[Betrag] ),
+			        FILTER ( VALUES ( Dim_Szenario ), _szGewaehlt || Dim_Szenario[IstDefault] = TRUE () ),
+			        FILTER ( VALUES ( Dim_Version ), _veGewaehlt || Dim_Version[IstDefault] = TRUE () )
+			    )
+		formatString: #,0
+		lineageTag: 12a82f72-6b15-4ac6-b6e7-ddfbe84d1f01
+
+	measure 'Forecast Umsatz' = SUM ( Fact_Forecast_Absatz[Umsatz] )
+		formatString: #,0
+		lineageTag: 712d1c75-ff3a-4e68-bb84-2a5331f4fd60
+
+	measure 'Forecast Menge' = SUM ( Fact_Forecast_Absatz[Menge] )
+		formatString: #,0
+		lineageTag: 010a3ce0-281d-4816-ab30-3724180b3b38
+
+	measure 'Last Estimate Umsatz' =
+			-- Neuester Forecast-Stand, unabhängig von einer Stand-Auswahl
+			VAR _neu = CALCULATE ( MAX ( Dim_ForecastStand[Sortierung] ), REMOVEFILTERS ( Dim_ForecastStand ) )
+			RETURN CALCULATE ( [Forecast Umsatz], REMOVEFILTERS ( Dim_ForecastStand ), Dim_ForecastStand[Sortierung] = _neu )
+		formatString: #,0
+		lineageTag: e22cb2ff-99cb-4233-8363-5af2cacf959d
+
+	measure 'Letzter Forecast für Periode' =
+			-- Für abgeschlossene Perioden: der Stand, der im Monat der Periode erstellt wurde (Horizont 0)
+			VAR _mo = MAX ( Dim_Kalender[Monat] )
+			RETURN CALCULATE ( [Forecast Umsatz], REMOVEFILTERS ( Dim_ForecastStand ), Dim_ForecastStand[Sortierung] = _mo )
+		formatString: #,0
+		lineageTag: 440db903-95ba-427e-872f-6bd620db2bef
+
+	measure 'LE / Ist Umsatz' = [Umsatz Ist/LE]
+		formatString: #,0
+		lineageTag: ae7c4a07-67d8-4400-8c27-ff630d11441e
+
+	measure 'Abw. zu Budget' = [LE / Ist Umsatz] - [Budget Umsatz]
+		formatString: #,0;-#,0;0
+		lineageTag: b6e28433-3d8a-4e5e-98d6-156a2ee7e995
+
+	measure 'Abw. zu Budget %' = DIVIDE ( [Abw. zu Budget], [Budget Umsatz] )
+		formatString: 0.0 %;-0.0 %;0.0 %
+		lineageTag: 39ccb6a3-3511-469c-b46e-5e896c7c32af
+
+	measure 'Prognoseverlauf Umsatz' =
+			-- Für einen gewählten Planmonat: je Forecast-Stand der Wert für diesen Monat, im Monat selbst der Ist-Wert
+			VAR _mo = MAX ( Dim_Kalender[Monat] )
+			VAR _st = MAX ( Dim_ForecastStand[Sortierung] )
+			RETURN SWITCH ( TRUE (), _st < _mo, [Forecast Umsatz], _st = _mo, [Umsatz Ist], BLANK () )
+		formatString: #,0
+		lineageTag: a4319602-7bdf-4563-b95b-4cc0cf7fccf4
+
+	measure 'Prognosefehler %' = DIVIDE ( [Forecast Umsatz] - [Umsatz Ist], [Umsatz Ist] )
+		formatString: 0.0 %;-0.0 %;0.0 %
+		lineageTag: 45c2ca28-ef0a-4195-92ad-e30726309d11
+
+	measure 'GuV Betrag Ist' =
+			-- GuV-Zeile im Kontext: bei einer Zeile diese, bei mehreren (Ebene1-Knoten) die Zeile ohne Parent; auf Gesamtebene leer
+			VAR _z =
+			    IF (
+			        HASONEVALUE ( Dim_GuV[GuVZeileID] ),
+			        SELECTEDVALUE ( Dim_GuV[GuVZeileID] ),
+			        IF (
+			            ISINSCOPE ( Dim_GuV[Ebene1] ) || ISINSCOPE ( Dim_GuV[Bezeichnung] ),
+			            CALCULATE ( MIN ( Dim_GuV[GuVZeileID] ), ISBLANK ( Dim_GuV[ParentID] ) ),
+			            BLANK ()
+			        )
+			    )
+			VAR _g021 = [Variable Kosten Ist]
+			VAR _g022 = CALCULATE ( [Gemeinkosten Ist], Dim_Kostenstelle[Bereich] = "Herstellung" )
+			VAR _g031 = CALCULATE ( [Gemeinkosten Ist], Dim_Kostenstelle[Bereich] = "Vertrieb", Dim_Kostenart[GuVZuordnung] = "Personal" )
+			VAR _g032 = CALCULATE ( [Gemeinkosten Ist], Dim_Kostenart[GuVZuordnung] = "Provision" )
+			VAR _g033 = CALCULATE ( [Gemeinkosten Ist], Dim_Kostenart[GuVZuordnung] = "Distribution" )
+			VAR _g034 = CALCULATE ( [Gemeinkosten Ist], Dim_Kostenart[GuVZuordnung] = "Werbung" )
+			VAR _g035 = CALCULATE ( [Gemeinkosten Ist], Dim_Kostenstelle[Bereich] = "Vertrieb", NOT Dim_Kostenart[GuVZuordnung] IN { "Personal", "Provision", "Distribution", "Werbung" } )
+			VAR _g041 = CALCULATE ( [Gemeinkosten Ist], Dim_Kostenstelle[Bereich] = "Verwaltung", Dim_Kostenart[GuVZuordnung] = "Personal" )
+			VAR _g042 = CALCULATE ( [Gemeinkosten Ist], Dim_Kostenart[GuVZuordnung] IN { "Miete", "IT" } )
+			VAR _g043 = CALCULATE ( [Gemeinkosten Ist], Dim_Kostenstelle[Bereich] = "Verwaltung", NOT Dim_Kostenart[GuVZuordnung] IN { "Personal", "Miete", "IT" } )
+			VAR _g010 = [Umsatz Ist]
+			VAR _g020 = _g021 + _g022
+			VAR _g025 = _g010 - _g020
+			VAR _g030 = _g031 + _g032 + _g033 + _g034 + _g035
+			VAR _g040 = _g041 + _g042 + _g043
+			VAR _g050 = CALCULATE ( [Sonstige Erträge Ist], REMOVEFILTERS ( Dim_GuV ) )
+			VAR _g060 = _g025 - _g030 - _g040 + _g050
+			RETURN SWITCH ( _z,
+			    "G010", _g010, "G020", _g020, "G021", _g021, "G022", _g022, "G025", _g025,
+			    "G030", _g030, "G031", _g031, "G032", _g032, "G033", _g033, "G034", _g034, "G035", _g035,
+			    "G040", _g040, "G041", _g041, "G042", _g042, "G043", _g043,
+			    "G050", _g050, "G060", _g060, "G070", DIVIDE ( _g060, _g010 ) )
+		formatString: #,0.00
+		lineageTag: 7a94c3c2-ab86-41aa-ade2-d8149cf5a008
+
+	measure 'Anzahl Kommentare' = COUNTROWS ( Fact_Kommentare )
+		formatString: #,0
+		lineageTag: 91d0a614-b166-4f28-b01a-9b5b3aff16a7
+
+	measure Kommentierbar = IF ( SELECTEDVALUE ( Dim_GuV[Kommentierbar] ) = TRUE (), "ja", "gesperrt" )
+		lineageTag: 7cead0b5-db24-439a-aad7-b6d715bc42db
+
+	measure Umsatzanteil =
+			-- Anteil des gefilterten Umsatzes (Produkt / Key Account) am Gesamtumsatz, für die Schlüsselung der Gemeinkosten
+			DIVIDE ( [Umsatz Ist], CALCULATE ( [Umsatz Ist], REMOVEFILTERS ( Dim_Produkt ), REMOVEFILTERS ( Dim_KeyAccount ) ) )
+		formatString: 0.0 %
+		lineageTag: 00f5cffd-0b36-4df6-8571-1a006b2f8f66
+
+	measure 'Gemeinkosten Ist (zugerechnet)' = [Gemeinkosten Ist] * [Umsatzanteil]
+		formatString: #,0
+		lineageTag: 9ad6b248-93f1-4c85-bbc2-97af79802279
+
+	measure 'Sonstige Erträge Ist (zugerechnet)' = [Sonstige Erträge Ist] * [Umsatzanteil]
+		formatString: #,0
+		lineageTag: 8ec84e6b-ad04-49db-8813-d8cd5fccc74a
+
+	measure 'Menge Ist VJ' =
+			-- Vorjahreswert im gleichen Monat (bzw. Quartal/Jahr), unabhängig von Periode-Filtern
+			VAR _vj = MAX ( Dim_Kalender[Jahr] ) - 1
+			VAR _monate = VALUES ( Dim_Kalender[Monat] )
+			RETURN CALCULATE ( [Menge Ist], REMOVEFILTERS ( Dim_Kalender ), Dim_Kalender[Jahr] = _vj, _monate )
+		formatString: #,0
+		lineageTag: a3c8ae43-9b71-4025-b465-f8a43211b102
+
+	measure 'Umsatz Ist VJ' =
+			VAR _vj = MAX ( Dim_Kalender[Jahr] ) - 1
+			VAR _monate = VALUES ( Dim_Kalender[Monat] )
+			RETURN CALCULATE ( [Umsatz Ist], REMOVEFILTERS ( Dim_Kalender ), Dim_Kalender[Jahr] = _vj, _monate )
+		formatString: #,0
+		lineageTag: 71966ee7-d2a1-46b3-98cb-af90da03200f
+
+	measure 'Preis Ist' =
+			-- mengengewichteter Durchschnittspreis
+			DIVIDE ( [Umsatz Ist], [Menge Ist] )
+		formatString: #,0.00
+		lineageTag: ccef9bc2-7467-42b2-a153-8076740bee45
+
+	measure 'Preis Ist VJ' = DIVIDE ( [Umsatz Ist VJ], [Menge Ist VJ] )
+		formatString: #,0.00
+		lineageTag: 44efe6e7-12f9-4c32-a86f-3c2dc5328b36
+
+	measure 'Menge Ist Abw. VJ %' = DIVIDE ( [Menge Ist] - [Menge Ist VJ], [Menge Ist VJ] )
+		formatString: 0.0 %;-0.0 %;0.0 %
+		lineageTag: 0a9d887e-2d7d-4945-bcd6-a5f5037ecdeb
+
+	measure 'Last Estimate Menge' =
+			VAR _neu = CALCULATE ( MAX ( Dim_ForecastStand[Sortierung] ), REMOVEFILTERS ( Dim_ForecastStand ) )
+			RETURN CALCULATE ( [Forecast Menge], REMOVEFILTERS ( Dim_ForecastStand ), Dim_ForecastStand[Sortierung] = _neu )
+		formatString: #,0
+		lineageTag: 8044c302-7f79-44ad-9ee5-fcb00ec12532
+
+	measure 'Menge Ist/LE' =
+			-- je Periode: abgeschlossen -> Ist, offen -> neuester Forecast-Stand; auch auf Quartals-/Jahresebene korrekt
+			SUMX ( VALUES ( Dim_Kalender[Periode] ), IF ( CALCULATE ( MAX ( Dim_Kalender[Status] ) ) = "abgeschlossen", [Menge Ist], [Last Estimate Menge] ) )
+		formatString: #,0
+		lineageTag: 900631ee-cdd6-4509-a692-4e273400d222
+
+	measure 'Umsatz Ist/LE' = SUMX ( VALUES ( Dim_Kalender[Periode] ), IF ( CALCULATE ( MAX ( Dim_Kalender[Status] ) ) = "abgeschlossen", [Umsatz Ist], [Last Estimate Umsatz] ) )
+		formatString: #,0
+		lineageTag: f7190da6-11f3-4411-bc03-fdf84ea90a26
+
+	measure 'Menge Ist/LE VJ' =
+			-- Referenz für die Budgetplanung des Folgejahres (z.B. 2027 -> Ist/LE 2026)
+			VAR _vj = MAX ( Dim_Kalender[Jahr] ) - 1
+			VAR _monate = VALUES ( Dim_Kalender[Monat] )
+			RETURN CALCULATE ( [Menge Ist/LE], REMOVEFILTERS ( Dim_Kalender ), Dim_Kalender[Jahr] = _vj, _monate )
+		formatString: #,0
+		lineageTag: b2db6186-934e-46ec-8b4d-b173fe85ce75
+
+	measure 'Umsatz Ist/LE VJ' =
+			VAR _vj = MAX ( Dim_Kalender[Jahr] ) - 1
+			VAR _monate = VALUES ( Dim_Kalender[Monat] )
+			RETURN CALCULATE ( [Umsatz Ist/LE], REMOVEFILTERS ( Dim_Kalender ), Dim_Kalender[Jahr] = _vj, _monate )
+		formatString: #,0
+		lineageTag: 06697b08-e1e4-4114-9db4-4e0da0d82369
+
+	measure 'Preis Ist/LE VJ' = DIVIDE ( [Umsatz Ist/LE VJ], [Menge Ist/LE VJ] )
+		formatString: #,0.00
+		lineageTag: 0d461f63-14e0-46e6-9393-01690bb9d5d5
+
+	measure 'Budget Menge' =
+			-- Ohne Auswahl: Base-Szenario und Version Konsolidiert (IstDefault)
+			VAR _szGewaehlt = ISFILTERED ( Dim_Szenario[Szenario] )
+			VAR _veGewaehlt = ISFILTERED ( Dim_Version[Version] )
+			RETURN
+			    CALCULATE (
+			        SUM ( Fact_Budget_Absatz[Menge] ),
+			        FILTER ( VALUES ( Dim_Szenario ), _szGewaehlt || Dim_Szenario[IstDefault] = TRUE () ),
+			        FILTER ( VALUES ( Dim_Version ), _veGewaehlt || Dim_Version[IstDefault] = TRUE () )
+			    )
+		formatString: #,0
+		lineageTag: 48ae36a0-7a8a-4f52-bef7-42cc79c7081a
+
+	measure 'Budget Preis' = DIVIDE ( [Budget Umsatz], [Budget Menge] )
+		formatString: #,0.00
+		lineageTag: 00197322-6762-4fc1-a19a-ff4d902d067c
+
+	measure Schreibrecht =
+			-- 1, wenn im aktuellen Kontext mindestens ein Key Account liegt, für den der angemeldete Nutzer schreiben darf
+			-- (robust für Zeilen, Summen und Spaltenkontexte); Text "Ja"/"Nein", weil Fabric Plan Measure-Filterwerte als Text übergibt; Filter im Eingabe-Sheet: Schreibrecht = Ja
+			VAR _erlaubt =
+			    SELECTCOLUMNS (
+			        FILTER (
+			            ALL ( Berechtigung_KeyAccount ),
+			            Berechtigung_KeyAccount[Benutzer] = USERPRINCIPALNAME ()
+			                && Berechtigung_KeyAccount[Planungsbereich] = "Vertrieb"
+			                && Berechtigung_KeyAccount[Recht] = "Schreiben"
+			        ),
+			        "k", Berechtigung_KeyAccount[KeyAccountID]
+			    )
+			RETURN
+			    IF ( COUNTROWS ( INTERSECT ( VALUES ( Dim_KeyAccount[KeyAccountID] ), _erlaubt ) ) > 0, "Ja", "Nein" )
+		lineageTag: 84b02565-4b9e-4cfc-8440-73b30cff0d8d
+
+	measure 'Angemeldeter Benutzer' = USERPRINCIPALNAME ()
+		lineageTag: 1fb07dba-ee96-4305-abbf-7bc996c3f47e
+
+	measure 'Budget Menge Land' =
+			-- Landessumme unabhängig vom Key-Account-Filter (z.B. Schreibrecht = 1); innerhalb der RLS
+			VAR _land = VALUES ( Dim_KeyAccount[Land] )
+			RETURN CALCULATE ( [Budget Menge], REMOVEFILTERS ( Dim_KeyAccount ), TREATAS ( _land, Dim_KeyAccount[Land] ) )
+		formatString: #,0
+		lineageTag: 617ea96a-4cc7-4c14-a09f-46f8209cd5b5
+
+	measure 'Budget Umsatz Land' =
+			VAR _land = VALUES ( Dim_KeyAccount[Land] )
+			RETURN CALCULATE ( [Budget Umsatz], REMOVEFILTERS ( Dim_KeyAccount ), TREATAS ( _land, Dim_KeyAccount[Land] ) )
+		formatString: #,0
+		lineageTag: 61087247-328f-4c03-9a4d-f419bfefd8f3
+
+	measure 'Anteil am Land %' = DIVIDE ( [Budget Umsatz], [Budget Umsatz Land] )
+		formatString: 0.0 %
+		lineageTag: 0d5728ba-2baa-4970-a718-579983937ee9
+
+	measure 'Menge Ist (Eingabe)' =
+			-- für Sheets mit Dim_KeyAccount_Eingabe in den Zeilen (keine Beziehung, RLS nach Schreibrecht)
+			CALCULATE ( [Menge Ist], TREATAS ( VALUES ( Dim_KeyAccount_Eingabe[KeyAccountID] ), Dim_KeyAccount[KeyAccountID] ) )
+		formatString: #,0
+		lineageTag: 8be5c80f-ad57-4c4a-ad52-c7fca2adedec
+
+	measure 'Umsatz Ist (Eingabe)' =
+			-- für Sheets mit Dim_KeyAccount_Eingabe in den Zeilen (keine Beziehung, RLS nach Schreibrecht)
+			CALCULATE ( [Umsatz Ist], TREATAS ( VALUES ( Dim_KeyAccount_Eingabe[KeyAccountID] ), Dim_KeyAccount[KeyAccountID] ) )
+		formatString: #,0
+		lineageTag: 203fbd3d-d25c-44ba-a846-09d01b927e04
+
+	measure 'Menge Ist VJ (Eingabe)' =
+			-- für Sheets mit Dim_KeyAccount_Eingabe in den Zeilen (keine Beziehung, RLS nach Schreibrecht)
+			CALCULATE ( [Menge Ist VJ], TREATAS ( VALUES ( Dim_KeyAccount_Eingabe[KeyAccountID] ), Dim_KeyAccount[KeyAccountID] ) )
+		formatString: #,0
+		lineageTag: e1c9b563-b22c-4d22-be1e-976ae76a0530
+
+	measure 'Umsatz Ist VJ (Eingabe)' =
+			-- für Sheets mit Dim_KeyAccount_Eingabe in den Zeilen (keine Beziehung, RLS nach Schreibrecht)
+			CALCULATE ( [Umsatz Ist VJ], TREATAS ( VALUES ( Dim_KeyAccount_Eingabe[KeyAccountID] ), Dim_KeyAccount[KeyAccountID] ) )
+		formatString: #,0
+		lineageTag: 8222e70a-002e-409f-a833-4c502318a5d2
+
+	measure 'Menge Ist/LE VJ (Eingabe)' =
+			-- für Sheets mit Dim_KeyAccount_Eingabe in den Zeilen (keine Beziehung, RLS nach Schreibrecht)
+			CALCULATE ( [Menge Ist/LE VJ], TREATAS ( VALUES ( Dim_KeyAccount_Eingabe[KeyAccountID] ), Dim_KeyAccount[KeyAccountID] ) )
+		formatString: #,0
+		lineageTag: 514682c6-bc18-4689-951c-672d10ab0be4
+
+	measure 'Umsatz Ist/LE VJ (Eingabe)' =
+			-- für Sheets mit Dim_KeyAccount_Eingabe in den Zeilen (keine Beziehung, RLS nach Schreibrecht)
+			CALCULATE ( [Umsatz Ist/LE VJ], TREATAS ( VALUES ( Dim_KeyAccount_Eingabe[KeyAccountID] ), Dim_KeyAccount[KeyAccountID] ) )
+		formatString: #,0
+		lineageTag: 9487c485-2218-4248-8a75-3fe386b8cff7
+
+	measure 'Budget Menge (Eingabe)' =
+			-- für Sheets mit Dim_KeyAccount_Eingabe in den Zeilen (keine Beziehung, RLS nach Schreibrecht)
+			CALCULATE ( [Budget Menge], TREATAS ( VALUES ( Dim_KeyAccount_Eingabe[KeyAccountID] ), Dim_KeyAccount[KeyAccountID] ) )
+		formatString: #,0
+		lineageTag: 584cd31b-3aef-4521-bd2d-f9097c0edf19
+
+	measure 'Budget Umsatz (Eingabe)' =
+			-- für Sheets mit Dim_KeyAccount_Eingabe in den Zeilen (keine Beziehung, RLS nach Schreibrecht)
+			CALCULATE ( [Budget Umsatz], TREATAS ( VALUES ( Dim_KeyAccount_Eingabe[KeyAccountID] ), Dim_KeyAccount[KeyAccountID] ) )
+		formatString: #,0
+		lineageTag: bd4eed78-a1ae-43c6-88d7-98eea68ce207
+
+	measure 'Preis Ist/LE VJ (Eingabe)' = DIVIDE ( [Umsatz Ist/LE VJ (Eingabe)], [Menge Ist/LE VJ (Eingabe)] )
+		formatString: #,0.00
+		lineageTag: 326fa83a-080e-42ac-b0b0-d36f588dc9ba
+
+	measure 'Budget Menge Land (Eingabe)' =
+			-- Landessumme aller Key Accounts (innerhalb der Lese-RLS), unabhängig von den Zeilen des Eingabe-Sheets
+			CALCULATE ( [Budget Menge], REMOVEFILTERS ( Dim_KeyAccount ), TREATAS ( VALUES ( Dim_KeyAccount_Eingabe[Land] ), Dim_KeyAccount[Land] ) )
+		formatString: #,0
+		lineageTag: 1ecf07ad-7bed-4093-b00e-6d4398239252
+
+	measure 'Budget Umsatz Land (Eingabe)' = CALCULATE ( [Budget Umsatz], REMOVEFILTERS ( Dim_KeyAccount ), TREATAS ( VALUES ( Dim_KeyAccount_Eingabe[Land] ), Dim_KeyAccount[Land] ) )
+		formatString: #,0
+		lineageTag: 16f43cab-f355-40d6-9e80-b06915b69aca
+
+	measure 'Anteil am Land % (Eingabe)' = DIVIDE ( [Budget Umsatz (Eingabe)], [Budget Umsatz Land (Eingabe)] )
+		formatString: 0.0 %
+		lineageTag: f30f0477-6470-440b-a30f-90f30e3e68e6
+
+	measure 'GuV Betrag VJ' =
+			VAR _vj = MAX ( Dim_Kalender[Jahr] ) - 1
+			VAR _monate = VALUES ( Dim_Kalender[Monat] )
+			RETURN CALCULATE ( [GuV Betrag Ist], REMOVEFILTERS ( Dim_Kalender ), Dim_Kalender[Jahr] = _vj, _monate )
+		formatString: #,0.00
+		lineageTag: 6cf1cf66-8174-4850-b6a5-dc927d21d57d
+
+	measure 'GuV Abw. VJ' = [GuV Betrag Ist] - [GuV Betrag VJ]
+		formatString: #,0.00;-#,0.00;0
+		lineageTag: eae4e0b9-44ab-4796-8599-12fabeaaa613
+
+	measure 'GuV Abw. VJ %' = DIVIDE ( [GuV Betrag Ist] - [GuV Betrag VJ], ABS ( [GuV Betrag VJ] ) )
+		formatString: 0.0 %;-0.0 %;0.0 %
+		lineageTag: dad81e5f-ed1d-40c4-a9a5-cdb6ed0510d0
+
+	measure 'Var. Stückkosten Ist' = DIVIDE ( [Variable Kosten Ist], [Menge Ist] )
+		formatString: #,0.00
+		lineageTag: 9e2c1cb1-0615-47cf-83a0-c4cbedc15197
+
+	measure Treiberwert =
+			-- Wert je Member von Dim_Treiber für das Row Model (Treiberbaum) im Planning Sheet; Fixkosten nach Umsatzanteil zugerechnet
+			SWITCH (
+			    SELECTEDVALUE ( Dim_Treiber[Treiber] ),
+			    "Absatzmenge", [Menge Ist],
+			    "Preis", [Preis Ist],
+			    "VarStueckkosten", [Var. Stückkosten Ist],
+			    "Umsatz", [Umsatz Ist],
+			    "VariableKosten", [Variable Kosten Ist],
+			    "Deckungsbeitrag", [Deckungsbeitrag Ist],
+			    "Fixkosten", [Gemeinkosten Ist (zugerechnet)] - [Sonstige Erträge Ist (zugerechnet)],
+			    "EBIT", [EBIT Ist],
+			    "Umsatzrendite", [Umsatzrendite Ist]
+			)
+		formatString: #,0.00
+		lineageTag: 77dd325c-d824-4850-a9e1-b01dde136a40
+
+	measure Kommentare =
+			-- alle Kommentare im aktuellen Kontext (GuV-Zeile × Periode), chronologisch, für die Anzeige neben den Zahlen
+			CONCATENATEX (
+			    Fact_Kommentare,
+			    Fact_Kommentare[Bearbeiter] & ": " & Fact_Kommentare[Kommentar],
+			    UNICHAR ( 10 ),
+			    Fact_Kommentare[Zeitstempel], ASC
+			)
+		lineageTag: 9f316b0f-2aad-46b5-86b1-9801f643d9e0
+
+	measure 'Kommentar vorhanden' = IF ( [Anzahl Kommentare] > 0, "●", "" )
+		lineageTag: 2f823349-5906-47d6-af9c-0316921b8762
+
+	column Platzhalter
+		dataType: string
+		isHidden
+		lineageTag: 210c2515-a4e6-43f6-b993-e8bbf821f0aa
+		summarizeBy: none
+		sourceColumn: [Platzhalter]
+
+	partition Kennzahlen = calculated
+		mode: import
+		source = ROW ( "Platzhalter", BLANK () )
+

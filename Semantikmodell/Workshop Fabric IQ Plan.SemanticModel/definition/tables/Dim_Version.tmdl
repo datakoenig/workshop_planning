@@ -1,0 +1,33 @@
+table Dim_Version
+	lineageTag: b8f2ecfc-c56a-4510-9945-c520eb9b4510
+
+	column Version
+		dataType: string
+		lineageTag: 93fcc531-3e77-4b9e-87b3-564f7e40b840
+		summarizeBy: none
+		sourceColumn: Version
+		sortByColumn: Sortierung
+
+	column Sortierung
+		dataType: int64
+		formatString: #,0
+		lineageTag: 43c4e0f8-0b4a-457f-af3c-d0618702e933
+		summarizeBy: none
+		sourceColumn: Sortierung
+
+	column IstDefault
+		dataType: boolean
+		lineageTag: 0969f424-17c4-42ed-8acd-20efada42931
+		summarizeBy: none
+		sourceColumn: IstDefault
+
+	partition Dim_Version = m
+		mode: import
+		source =
+				let
+				    Quelle = Csv.Document(File.Contents(Ordner & "Dim_Version.csv"), [Delimiter = ",", Encoding = 65001, QuoteStyle = QuoteStyle.Csv]),
+				    Header = Table.PromoteHeaders(Quelle, [PromoteAllScalars = true]),
+				    Typen = Table.TransformColumnTypes(Header, {{"Version", type text}, {"Sortierung", Int64.Type}, {"IstDefault", type logical}}, "en-US")
+				in
+				    Typen
+

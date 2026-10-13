@@ -1,0 +1,109 @@
+table Dim_GuV
+	lineageTag: b2273419-308f-4a05-aec2-e83bc865690f
+
+	column GuVZeileID
+		dataType: string
+		lineageTag: 0278b9fa-c70f-4e75-b8df-5ea53cc68b2e
+		summarizeBy: none
+		sourceColumn: GuVZeileID
+
+	column Bezeichnung
+		dataType: string
+		lineageTag: 7830db22-593d-47d0-9588-29b8b7891afa
+		summarizeBy: none
+		sourceColumn: Bezeichnung
+		sortByColumn: Sortierung
+
+	column ParentID
+		dataType: string
+		lineageTag: 6367564e-a6c4-4e1c-adb4-0c06ba51ace8
+		summarizeBy: none
+		sourceColumn: ParentID
+
+	column Sortierung
+		dataType: int64
+		formatString: #,0
+		lineageTag: cf1341da-1211-4518-ad74-8a82b1897a23
+		summarizeBy: none
+		sourceColumn: Sortierung
+
+	column Typ
+		dataType: string
+		lineageTag: 6450019b-cbc8-4504-938f-5d15f8227f82
+		summarizeBy: none
+		sourceColumn: Typ
+
+	column Quelle
+		dataType: string
+		lineageTag: 268c8789-729c-4991-ba49-089bfbfc7c6d
+		summarizeBy: none
+		sourceColumn: Quelle
+
+	column Kommentierbar
+		dataType: boolean
+		lineageTag: bd43a3cf-6772-44c8-94d1-e0facd28b80a
+		summarizeBy: none
+		sourceColumn: Kommentierbar
+
+	column Ebene1
+		dataType: string
+		lineageTag: 0947eda9-72f3-4aa7-9025-0f7a2d073bb9
+		summarizeBy: none
+		sourceColumn: Ebene1
+		sortByColumn: Sortierung1
+
+	column Ebene2
+		dataType: string
+		lineageTag: 912ddcdf-2bb3-403f-aa59-0c05d41d34fb
+		summarizeBy: none
+		sourceColumn: Ebene2
+		sortByColumn: Sortierung2
+
+	column Sortierung1
+		dataType: int64
+		isHidden
+		lineageTag: 6afbfe50-c46d-4678-ad03-d8c11dcf8f3a
+		summarizeBy: none
+		sourceColumn: Sortierung1
+
+	column Sortierung2
+		dataType: int64
+		isHidden
+		lineageTag: f61726dc-d776-447e-86f3-27983db96a86
+		summarizeBy: none
+		sourceColumn: Sortierung2
+
+	column 'GuV Zeile'
+		dataType: string
+		lineageTag: 2588e18f-f853-48d5-bf9f-025afc5eea33
+		summarizeBy: none
+		sourceColumn: GuV Zeile
+		sortByColumn: Sortierung
+
+	column Fett
+		dataType: boolean
+		lineageTag: 3876449c-7521-4f2e-a2df-7025c2e3e3d0
+		summarizeBy: none
+		sourceColumn: Fett
+
+	hierarchy 'GuV Struktur'
+		lineageTag: cc11992e-eb96-4e18-88fc-10a46018421b
+
+		level Ebene1
+			lineageTag: 6b7c372b-0fca-41d3-a3fd-2458387c06ce
+			column: Ebene1
+
+		level Ebene2
+			lineageTag: 3d655d50-2416-48ef-a7ca-07501696d474
+			column: Ebene2
+
+	partition Dim_GuV = m
+		mode: import
+		source =
+				let
+				    Quelle = Csv.Document(File.Contents(Ordner & "Dim_GuV.csv"), [Delimiter = ",", Encoding = 65001, QuoteStyle = QuoteStyle.Csv]),
+				    Header = Table.PromoteHeaders(Quelle, [PromoteAllScalars = true]),
+				    Typen = Table.TransformColumnTypes(Header, {{"GuVZeileID", type text}, {"Bezeichnung", type text}, {"ParentID", type text}, {"Sortierung", Int64.Type}, {"Typ", type text}, {"Quelle", type text}, {"Kommentierbar", type logical}, {"Ebene1", type text}, {"Ebene2", type text}, {"Sortierung1", Int64.Type}, {"Sortierung2", Int64.Type}, {"GuV Zeile", type text}, {"Fett", type logical}}, "en-US")
+				in
+				    Typen
+

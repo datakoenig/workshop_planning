@@ -1,0 +1,38 @@
+table Dim_KeyAccount_Eingabe
+	lineageTag: 95984b6e-793e-4d58-9a17-0e27fb7d1404
+
+	column KeyAccountID
+		dataType: string
+		lineageTag: 7fa26880-41bf-4971-8059-076e5b978596
+		summarizeBy: none
+		sourceColumn: KeyAccountID
+
+	column KeyAccount
+		dataType: string
+		lineageTag: 50112ac4-bf94-492f-a7fb-3cc0ff332ad3
+		summarizeBy: none
+		sourceColumn: KeyAccount
+
+	column Region
+		dataType: string
+		lineageTag: 94818097-d75f-4569-b9f7-4b9090f0e6c8
+		summarizeBy: none
+		sourceColumn: Region
+
+	column Land
+		dataType: string
+		lineageTag: eff7ba5d-d187-4a33-b401-ad29388bad7c
+		summarizeBy: none
+		sourceColumn: Land
+
+	partition Dim_KeyAccount_Eingabe = m
+		mode: import
+		source =
+				let
+				    // Gleiche Quelle wie Dim_KeyAccount; eigene Tabelle, damit eine zweite RLS-Regel (Schreibrechte) darauf wirken kann
+				    Quelle = Csv.Document(File.Contents(Ordner & "Dim_KeyAccount.csv"), [Delimiter = ",", Encoding = 65001, QuoteStyle = QuoteStyle.Csv]),
+				    Header = Table.PromoteHeaders(Quelle, [PromoteAllScalars = true]),
+				    Typen = Table.TransformColumnTypes(Header, {{"KeyAccountID", type text}, {"KeyAccount", type text}, {"Region", type text}, {"Land", type text}}, "en-US")
+				in
+				    Typen
+

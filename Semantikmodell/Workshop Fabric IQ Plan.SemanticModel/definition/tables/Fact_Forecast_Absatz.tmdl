@@ -1,0 +1,58 @@
+table Fact_Forecast_Absatz
+	lineageTag: ea1fd3cf-18df-4b91-ba9c-054133424d68
+
+	column ForecastStand
+		dataType: string
+		lineageTag: dd3d1a5c-955f-47ac-8c1b-912d825be8ce
+		summarizeBy: none
+		sourceColumn: ForecastStand
+
+	column Periode
+		dataType: string
+		lineageTag: 28a0dde0-57e8-496b-a3f9-1132f40d6c93
+		summarizeBy: none
+		sourceColumn: Periode
+
+	column KeyAccountID
+		dataType: string
+		lineageTag: dad5edbe-cad8-407a-8a9d-51193caa3f8c
+		summarizeBy: none
+		sourceColumn: KeyAccountID
+
+	column ProduktID
+		dataType: string
+		lineageTag: 7e490a1f-b011-4d9c-bc74-aa39a1e5a038
+		summarizeBy: none
+		sourceColumn: ProduktID
+
+	column Menge
+		dataType: int64
+		formatString: #,0
+		lineageTag: f1adaa02-7861-49fa-a693-3bbb58f616ba
+		summarizeBy: sum
+		sourceColumn: Menge
+
+	column Preis
+		dataType: double
+		formatString: #,0.00
+		lineageTag: abc2fef5-05db-4611-bc78-ab2dac74a04a
+		summarizeBy: sum
+		sourceColumn: Preis
+
+	column Umsatz
+		dataType: double
+		formatString: #,0.00
+		lineageTag: 268c8a3c-ff18-4d9a-a95b-1acba660045d
+		summarizeBy: sum
+		sourceColumn: Umsatz
+
+	partition Fact_Forecast_Absatz = m
+		mode: import
+		source =
+				let
+				    Quelle = Csv.Document(File.Contents(Ordner & "Fact_Forecast_Absatz.csv"), [Delimiter = ",", Encoding = 65001, QuoteStyle = QuoteStyle.Csv]),
+				    Header = Table.PromoteHeaders(Quelle, [PromoteAllScalars = true]),
+				    Typen = Table.TransformColumnTypes(Header, {{"ForecastStand", type text}, {"Periode", type text}, {"KeyAccountID", type text}, {"ProduktID", type text}, {"Menge", Int64.Type}, {"Preis", type number}, {"Umsatz", type number}}, "en-US")
+				in
+				    Typen
+

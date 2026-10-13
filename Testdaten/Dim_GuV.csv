@@ -1,0 +1,19 @@
+﻿GuVZeileID,Bezeichnung,ParentID,Sortierung,Typ,Quelle,Kommentierbar,Ebene1,Ebene2,GuV Zeile,Fett,Sortierung1,Sortierung2
+G010,Umsatzerlöse,,10,Blatt,Umsatz,True,Umsatzerlöse,Umsatzerlöse,Umsatzerlöse,False,10,10
+G020,Herstellungskosten des Umsatzes,,20,Summe,,False,Herstellungskosten des Umsatzes,Herstellungskosten des Umsatzes,Herstellungskosten des Umsatzes,True,20,20
+G021,Materialeinsatz (variable Kosten),G020,21,Blatt,VariableKosten,True,Herstellungskosten des Umsatzes,Materialeinsatz (variable Kosten),  Materialeinsatz (variable Kosten),False,20,21
+G022,Produktionsgemeinkosten,G020,22,Blatt,KST:Herstellung,True,Herstellungskosten des Umsatzes,Produktionsgemeinkosten,  Produktionsgemeinkosten,False,20,22
+G025,Bruttoergebnis,,25,Berechnet,G010 - G020,False,Bruttoergebnis,Bruttoergebnis,Bruttoergebnis,True,25,25
+G030,Vertriebskosten,,30,Summe,,False,Vertriebskosten,Vertriebskosten,Vertriebskosten,True,30,30
+G031,Personal Vertrieb,G030,31,Blatt,KST:Vertrieb;KOA:Personal,True,Vertriebskosten,Personal Vertrieb,  Personal Vertrieb,False,30,31
+G032,Provisionen,G030,32,Blatt,KOA:Provision,True,Vertriebskosten,Provisionen,  Provisionen,False,30,32
+G033,Distribution,G030,33,Blatt,KOA:Distribution,True,Vertriebskosten,Distribution,  Distribution,False,30,33
+G034,Werbung,G030,34,Blatt,KOA:Werbung,True,Vertriebskosten,Werbung,  Werbung,False,30,34
+G035,Sonstige Vertriebskosten,G030,35,Blatt,KST:Vertrieb;KOA:Rest,True,Vertriebskosten,Sonstige Vertriebskosten,  Sonstige Vertriebskosten,False,30,35
+G040,Verwaltungskosten,,40,Summe,,False,Verwaltungskosten,Verwaltungskosten,Verwaltungskosten,True,40,40
+G041,Personal Verwaltung,G040,41,Blatt,KST:Verwaltung;KOA:Personal,True,Verwaltungskosten,Personal Verwaltung,  Personal Verwaltung,False,40,41
+G042,Miete und IT,G040,42,Blatt,KOA:Miete;KOA:IT,True,Verwaltungskosten,Miete und IT,  Miete und IT,False,40,42
+G043,Sonstige Verwaltungskosten,G040,43,Blatt,KST:Verwaltung;KOA:Rest,True,Verwaltungskosten,Sonstige Verwaltungskosten,  Sonstige Verwaltungskosten,False,40,43
+G050,Sonstige betriebliche Erträge,,50,Blatt,manuell,True,Sonstige betriebliche Erträge,Sonstige betriebliche Erträge,Sonstige betriebliche Erträge,False,50,50
+G060,EBIT,,60,Berechnet,G025 - G030 - G040 + G050,False,EBIT,EBIT,EBIT,True,60,60
+G070,Umsatzrendite,,70,Berechnet,G060 / G010,False,Umsatzrendite,Umsatzrendite,Umsatzrendite,True,70,70

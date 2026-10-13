@@ -1,0 +1,10 @@
+﻿Treiber,Formel,Typ,Einheit
+Absatzmenge,,Eingabe,Stück
+Preis,,Eingabe,EUR/Stück
+VarStueckkosten,,Eingabe,EUR/Stück
+Umsatz,Absatzmenge * Preis,Berechnet,EUR
+VariableKosten,Absatzmenge * VarStueckkosten,Berechnet,EUR
+Deckungsbeitrag,Umsatz - VariableKosten,Berechnet,EUR
+Fixkosten,,Eingabe,EUR
+EBIT,Deckungsbeitrag - Fixkosten,Berechnet,EUR
+Umsatzrendite,EBIT / Umsatz,Berechnet,%

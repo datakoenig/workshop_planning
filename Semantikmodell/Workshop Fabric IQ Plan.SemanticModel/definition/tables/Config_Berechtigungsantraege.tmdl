@@ -1,0 +1,68 @@
+table Config_Berechtigungsantraege
+	lineageTag: 43dd8246-bb59-4747-b9df-3f45ccf5da22
+
+	column AntragID
+		dataType: int64
+		formatString: #,0
+		lineageTag: 91e1dd0e-6bdf-4ad7-ac20-0dace4ce8334
+		summarizeBy: none
+		sourceColumn: AntragID
+
+	column Benutzer
+		dataType: string
+		lineageTag: 7bef05fa-5933-474c-958b-eb04fc9f2eb8
+		summarizeBy: none
+		sourceColumn: Benutzer
+
+	column Wert
+		dataType: string
+		lineageTag: a59d44ae-b42b-4b0b-9b03-47af20c53963
+		summarizeBy: none
+		sourceColumn: Wert
+
+	column Begruendung
+		dataType: string
+		lineageTag: 0e7599b7-fea1-4f7d-9564-5308a5e5ca44
+		summarizeBy: none
+		sourceColumn: Begruendung
+
+	column Status
+		dataType: string
+		lineageTag: 3d28806c-7e81-41b7-bd3f-a329c54553df
+		summarizeBy: none
+		sourceColumn: Status
+
+	column Freigabe_durch
+		dataType: string
+		lineageTag: 3aa79af0-9be2-40f4-8986-067d48f2d181
+		summarizeBy: none
+		sourceColumn: Freigabe_durch
+
+	column Freigabe_am
+		dataType: string
+		lineageTag: 7d8fe0fc-44b9-4917-b3fa-0fcaaaf038d9
+		summarizeBy: none
+		sourceColumn: Freigabe_am
+
+	column Planungsbereich
+		dataType: string
+		lineageTag: 203b73b2-74da-42c2-acfc-67b915680ff9
+		summarizeBy: none
+		sourceColumn: Planungsbereich
+
+	column Ebene
+		dataType: string
+		lineageTag: a1e34bf8-92cf-456e-8974-19ddb608c2a6
+		summarizeBy: none
+		sourceColumn: Ebene
+
+	partition Config_Berechtigungsantraege = m
+		mode: import
+		source =
+				let
+				    Quelle = Csv.Document(File.Contents(Ordner & "Config_Berechtigungsantraege.csv"), [Delimiter = ",", Encoding = 65001, QuoteStyle = QuoteStyle.Csv]),
+				    Header = Table.PromoteHeaders(Quelle, [PromoteAllScalars = true]),
+				    Typen = Table.TransformColumnTypes(Header, {{"AntragID", Int64.Type}, {"Benutzer", type text}, {"Planungsbereich", type text}, {"Ebene", type text}, {"Wert", type text}, {"Begruendung", type text}, {"Status", type text}, {"Freigabe_durch", type text}, {"Freigabe_am", type text}}, "en-US")
+				in
+				    Typen
+

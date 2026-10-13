@@ -1,0 +1,156 @@
+{
+  "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/1.0.0/schema.json",
+  "name": "7fadb669af7942fc9aad",
+  "position": {
+    "x": 30,
+    "y": 30,
+    "z": 0,
+    "width": 1860,
+    "height": 480
+  },
+  "visual": {
+    "visualType": "tableEx",
+    "query": {
+      "queryState": {
+        "Values": {
+          "projections": [
+            {
+              "field": {
+                "Column": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "Config_Berechtigungen"
+                    }
+                  },
+                  "Property": "Benutzer"
+                }
+              },
+              "queryRef": "Config_Berechtigungen.Benutzer",
+              "nativeQueryRef": "Benutzer"
+            },
+            {
+              "field": {
+                "Column": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "Config_Berechtigungen"
+                    }
+                  },
+                  "Property": "Planungsbereich"
+                }
+              },
+              "queryRef": "Config_Berechtigungen.Planungsbereich",
+              "nativeQueryRef": "Planungsbereich"
+            },
+            {
+              "field": {
+                "Column": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "Config_Berechtigungen"
+                    }
+                  },
+                  "Property": "Recht"
+                }
+              },
+              "queryRef": "Config_Berechtigungen.Recht",
+              "nativeQueryRef": "Recht"
+            },
+            {
+              "field": {
+                "Column": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "Config_Berechtigungen"
+                    }
+                  },
+                  "Property": "Ebene"
+                }
+              },
+              "queryRef": "Config_Berechtigungen.Ebene",
+              "nativeQueryRef": "Ebene"
+            },
+            {
+              "field": {
+                "Column": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "Config_Berechtigungen"
+                    }
+                  },
+                  "Property": "Wert"
+                }
+              },
+              "queryRef": "Config_Berechtigungen.Wert",
+              "nativeQueryRef": "Wert"
+            }
+          ]
+        }
+      }
+    },
+    "drillFilterOtherVisuals": true,
+    "visualContainerObjects": {
+      "title": [
+        {
+          "properties": {
+            "text": {
+              "expr": {
+                "Literal": {
+                  "Value": "'Berechtigungstabelle (Power Table)'"
+                }
+              }
+            },
+            "show": {
+              "expr": {
+                "Literal": {
+                  "Value": "true"
+                }
+              }
+            }
+          }
+        }
+      ]
+    },
+    "objects": {
+      "columnHeaders": [
+        {
+          "properties": {
+            "fontSize": {
+              "expr": {
+                "Literal": {
+                  "Value": "12D"
+                }
+              }
+            }
+          }
+        }
+      ],
+      "values": [
+        {
+          "properties": {
+            "fontSize": {
+              "expr": {
+                "Literal": {
+                  "Value": "12D"
+                }
+              }
+            }
+          }
+        }
+      ],
+      "total": [
+        {
+          "properties": {
+            "fontSize": {
+              "expr": {
+                "Literal": {
+                  "Value": "12D"
+                }
+              }
+            }
+          }
+        }
+      ]
+    }
+  }
+}

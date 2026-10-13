@@ -1,0 +1,31 @@
+table Dim_Kostenstelle
+	lineageTag: ea00189c-83bb-409e-9c3d-1ef90c54ca92
+
+	column KostenstelleID
+		dataType: string
+		lineageTag: 443c4426-afac-40af-989e-ee7f33eaf13d
+		summarizeBy: none
+		sourceColumn: KostenstelleID
+
+	column Kostenstelle
+		dataType: string
+		lineageTag: f7d3142f-9f35-44a8-8f0f-99bc0af0fe05
+		summarizeBy: none
+		sourceColumn: Kostenstelle
+
+	column Bereich
+		dataType: string
+		lineageTag: b3127f9f-3868-4d06-96dc-7c13c77b220c
+		summarizeBy: none
+		sourceColumn: Bereich
+
+	partition Dim_Kostenstelle = m
+		mode: import
+		source =
+				let
+				    Quelle = Csv.Document(File.Contents(Ordner & "Dim_Kostenstelle.csv"), [Delimiter = ",", Encoding = 65001, QuoteStyle = QuoteStyle.Csv]),
+				    Header = Table.PromoteHeaders(Quelle, [PromoteAllScalars = true]),
+				    Typen = Table.TransformColumnTypes(Header, {{"KostenstelleID", type text}, {"Kostenstelle", type text}, {"Bereich", type text}}, "en-US")
+				in
+				    Typen
+

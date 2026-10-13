@@ -1,0 +1,33 @@
+table Dim_Szenario
+	lineageTag: 098886c9-0659-491b-8203-ac302bff3a64
+
+	column Szenario
+		dataType: string
+		lineageTag: 2d3ca05e-6c74-417f-9d11-a6c5ca0e69b5
+		summarizeBy: none
+		sourceColumn: Szenario
+		sortByColumn: Sortierung
+
+	column Sortierung
+		dataType: int64
+		formatString: #,0
+		lineageTag: 35ee6414-2650-4ea9-a7a8-11356eac829e
+		summarizeBy: none
+		sourceColumn: Sortierung
+
+	column IstDefault
+		dataType: boolean
+		lineageTag: 3675cdd4-fba4-4a03-b0b0-6b55c6002aa6
+		summarizeBy: none
+		sourceColumn: IstDefault
+
+	partition Dim_Szenario = m
+		mode: import
+		source =
+				let
+				    Quelle = Csv.Document(File.Contents(Ordner & "Dim_Szenario.csv"), [Delimiter = ",", Encoding = 65001, QuoteStyle = QuoteStyle.Csv]),
+				    Header = Table.PromoteHeaders(Quelle, [PromoteAllScalars = true]),
+				    Typen = Table.TransformColumnTypes(Header, {{"Szenario", type text}, {"Sortierung", Int64.Type}, {"IstDefault", type logical}}, "en-US")
+				in
+				    Typen
+

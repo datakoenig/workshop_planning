@@ -1,0 +1,64 @@
+table Fact_Budget_Absatz
+	lineageTag: 0adc2d7a-0cd5-4a38-bfda-cbafa941e59d
+
+	column Periode
+		dataType: string
+		lineageTag: 32211e2b-9034-489b-bf1b-67bb8d5af17f
+		summarizeBy: none
+		sourceColumn: Periode
+
+	column Szenario
+		dataType: string
+		lineageTag: 7d880846-8501-4eca-994e-d5b791c76584
+		summarizeBy: none
+		sourceColumn: Szenario
+
+	column Version
+		dataType: string
+		lineageTag: 5aa1a317-bcdf-4441-8c99-99ea65a828da
+		summarizeBy: none
+		sourceColumn: Version
+
+	column KeyAccountID
+		dataType: string
+		lineageTag: 92db700f-3435-43aa-9371-54a2cb187a3e
+		summarizeBy: none
+		sourceColumn: KeyAccountID
+
+	column ProduktID
+		dataType: string
+		lineageTag: c3110f8b-aba5-4153-b4a9-e29253c5f2d1
+		summarizeBy: none
+		sourceColumn: ProduktID
+
+	column Menge
+		dataType: int64
+		formatString: #,0
+		lineageTag: 862bdb0f-7e89-4ce7-9ebc-cf6083eafd09
+		summarizeBy: sum
+		sourceColumn: Menge
+
+	column Preis
+		dataType: double
+		formatString: #,0.00
+		lineageTag: 3c666fa1-4819-433c-8c3f-da24ebbba0e1
+		summarizeBy: sum
+		sourceColumn: Preis
+
+	column Umsatz
+		dataType: double
+		formatString: #,0.00
+		lineageTag: 30f39402-d9c9-4ec2-bf7f-f1360a88e211
+		summarizeBy: sum
+		sourceColumn: Umsatz
+
+	partition Fact_Budget_Absatz = m
+		mode: import
+		source =
+				let
+				    Quelle = Csv.Document(File.Contents(Ordner & "Fact_Budget_Absatz.csv"), [Delimiter = ",", Encoding = 65001, QuoteStyle = QuoteStyle.Csv]),
+				    Header = Table.PromoteHeaders(Quelle, [PromoteAllScalars = true]),
+				    Typen = Table.TransformColumnTypes(Header, {{"Periode", type text}, {"Szenario", type text}, {"Version", type text}, {"KeyAccountID", type text}, {"ProduktID", type text}, {"Menge", Int64.Type}, {"Preis", type number}, {"Umsatz", type number}}, "en-US")
+				in
+				    Typen
+

@@ -1,0 +1,37 @@
+table Dim_Produkt
+	lineageTag: 4587f98d-ced6-43f2-ae87-61ba554c7b4c
+
+	column ProduktID
+		dataType: string
+		lineageTag: 5d72d1c5-ac8d-4e02-a2db-8ea7f02b1e01
+		summarizeBy: none
+		sourceColumn: ProduktID
+
+	column Produkt
+		dataType: string
+		lineageTag: 17a46f60-4562-4170-bdb2-26a86b60c33e
+		summarizeBy: none
+		sourceColumn: Produkt
+
+	column Produktgruppe
+		dataType: string
+		lineageTag: f53adfb5-ca3c-4c19-9cde-ea9aeeb643f1
+		summarizeBy: none
+		sourceColumn: Produktgruppe
+
+	column Sparte
+		dataType: string
+		lineageTag: 009cbb44-504e-43e4-8cbc-40b7d85a7dcb
+		summarizeBy: none
+		sourceColumn: Sparte
+
+	partition Dim_Produkt = m
+		mode: import
+		source =
+				let
+				    Quelle = Csv.Document(File.Contents(Ordner & "Dim_Produkt.csv"), [Delimiter = ",", Encoding = 65001, QuoteStyle = QuoteStyle.Csv]),
+				    Header = Table.PromoteHeaders(Quelle, [PromoteAllScalars = true]),
+				    Typen = Table.TransformColumnTypes(Header, {{"ProduktID", type text}, {"Produkt", type text}, {"Produktgruppe", type text}, {"Sparte", type text}}, "en-US")
+				in
+				    Typen
+

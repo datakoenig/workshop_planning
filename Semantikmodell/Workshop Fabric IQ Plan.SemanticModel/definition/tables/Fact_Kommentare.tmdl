@@ -1,0 +1,51 @@
+table Fact_Kommentare
+	lineageTag: 476e92ae-93b2-4ac8-bc65-2a16717a6ef4
+
+	column KommentarID
+		dataType: int64
+		formatString: #,0
+		lineageTag: 1ea849fb-3c2d-4e37-9353-d00c5047287a
+		summarizeBy: none
+		sourceColumn: KommentarID
+
+	column GuVZeileID
+		dataType: string
+		lineageTag: 4b7e64a9-4232-49d4-b3b0-d744b1536785
+		summarizeBy: none
+		sourceColumn: GuVZeileID
+
+	column Periode
+		dataType: string
+		lineageTag: 35832dc9-1f2f-4583-8461-44f606417bb5
+		summarizeBy: none
+		sourceColumn: Periode
+
+	column Bearbeiter
+		dataType: string
+		lineageTag: 67e76f98-d49a-40d2-adeb-0a2454e7e9a4
+		summarizeBy: none
+		sourceColumn: Bearbeiter
+
+	column Zeitstempel
+		dataType: dateTime
+		formatString: dd.MM.yyyy
+		lineageTag: 3c7626ae-ed50-46a2-8431-bf2ae929811a
+		summarizeBy: none
+		sourceColumn: Zeitstempel
+
+	column Kommentar
+		dataType: string
+		lineageTag: 72a722d7-72bb-4c75-bddf-3549c6bacafa
+		summarizeBy: none
+		sourceColumn: Kommentar
+
+	partition Fact_Kommentare = m
+		mode: import
+		source =
+				let
+				    Quelle = Csv.Document(File.Contents(Ordner & "Fact_Kommentare.csv"), [Delimiter = ",", Encoding = 65001, QuoteStyle = QuoteStyle.Csv]),
+				    Header = Table.PromoteHeaders(Quelle, [PromoteAllScalars = true]),
+				    Typen = Table.TransformColumnTypes(Header, {{"KommentarID", Int64.Type}, {"GuVZeileID", type text}, {"Periode", type text}, {"Bearbeiter", type text}, {"Zeitstempel", type datetime}, {"Kommentar", type text}}, "en-US")
+				in
+				    Typen
+

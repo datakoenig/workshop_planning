@@ -1,0 +1,6 @@
+# Power BI Desktop: lokale Einstellungen und Cache
+**/.pbi/
+# Interne Unterlagen
+*.docx
+*.md.bak
+Workshop Fabric IQ Plan v2.md

@@ -1,0 +1,34 @@
+table Dim_ForecastStand
+	lineageTag: 535aa581-05b8-4aa0-b4c5-15f8a9e68eb6
+
+	column ForecastStand
+		dataType: string
+		lineageTag: 306df697-1db1-4c5c-aa10-d402deacde39
+		summarizeBy: none
+		sourceColumn: ForecastStand
+		sortByColumn: Sortierung
+
+	column Erstellt
+		dataType: dateTime
+		formatString: dd.MM.yyyy
+		lineageTag: 2adf2c8e-08a2-4fa6-bc60-79bf52e230da
+		summarizeBy: none
+		sourceColumn: Erstellt
+
+	column Sortierung
+		dataType: int64
+		formatString: #,0
+		lineageTag: 7f57bdfd-4b0c-490d-aacd-c0fae77b6e82
+		summarizeBy: none
+		sourceColumn: Sortierung
+
+	partition Dim_ForecastStand = m
+		mode: import
+		source =
+				let
+				    Quelle = Csv.Document(File.Contents(Ordner & "Dim_ForecastStand.csv"), [Delimiter = ",", Encoding = 65001, QuoteStyle = QuoteStyle.Csv]),
+				    Header = Table.PromoteHeaders(Quelle, [PromoteAllScalars = true]),
+				    Typen = Table.TransformColumnTypes(Header, {{"ForecastStand", type text}, {"Erstellt", type datetime}, {"Sortierung", Int64.Type}}, "en-US")
+				in
+				    Typen
+

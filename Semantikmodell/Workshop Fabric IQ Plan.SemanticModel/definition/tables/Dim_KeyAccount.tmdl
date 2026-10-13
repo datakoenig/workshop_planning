@@ -1,0 +1,37 @@
+table Dim_KeyAccount
+	lineageTag: 77dc2991-ef10-4739-8570-9ccb7bdca551
+
+	column KeyAccountID
+		dataType: string
+		lineageTag: 71a60463-8208-4803-9784-c0f4e2acbe1f
+		summarizeBy: none
+		sourceColumn: KeyAccountID
+
+	column KeyAccount
+		dataType: string
+		lineageTag: 9afe56cd-0b4f-41a9-95bf-30593b1837ed
+		summarizeBy: none
+		sourceColumn: KeyAccount
+
+	column Region
+		dataType: string
+		lineageTag: 315944a3-cd9c-4092-b251-9f3dc330a08e
+		summarizeBy: none
+		sourceColumn: Region
+
+	column Land
+		dataType: string
+		lineageTag: 4891c18c-e9aa-4268-a8a0-c1b42502ea8a
+		summarizeBy: none
+		sourceColumn: Land
+
+	partition Dim_KeyAccount = m
+		mode: import
+		source =
+				let
+				    Quelle = Csv.Document(File.Contents(Ordner & "Dim_KeyAccount.csv"), [Delimiter = ",", Encoding = 65001, QuoteStyle = QuoteStyle.Csv]),
+				    Header = Table.PromoteHeaders(Quelle, [PromoteAllScalars = true]),
+				    Typen = Table.TransformColumnTypes(Header, {{"KeyAccountID", type text}, {"KeyAccount", type text}, {"Region", type text}, {"Land", type text}}, "en-US")
+				in
+				    Typen
+

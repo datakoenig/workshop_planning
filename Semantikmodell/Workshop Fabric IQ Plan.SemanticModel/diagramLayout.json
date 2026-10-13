@@ -1,0 +1,541 @@
+{
+  "version": "1.1.0",
+  "diagrams": [
+    {
+      "ordinal": 0,
+      "scrollPosition": {
+        "x": 0,
+        "y": 501
+      },
+      "nodes": [
+        {
+          "location": {
+            "x": 1958.3549123384255,
+            "y": 804.46723731245243
+          },
+          "nodeIndex": "Kennzahlen",
+          "nodeLineageTag": "221ebb9b-bda2-4395-9714-3de2a899af91",
+          "size": {
+            "height": 300,
+            "width": 234
+          },
+          "zIndex": 0
+        },
+        {
+          "location": {
+            "x": 2242.3549123384255,
+            "y": 842.46723731245243
+          },
+          "nodeIndex": "Config_Berechtigungen",
+          "nodeLineageTag": "16aa8093-9bac-4308-add3-584e3c3a4eaa",
+          "size": {
+            "height": 224,
+            "width": 234
+          },
+          "zIndex": 0
+        },
+        {
+          "location": {
+            "x": 2526.3549123384255,
+            "y": 818.46723731245243
+          },
+          "nodeIndex": "Config_Berechtigungsantraege",
+          "nodeLineageTag": "125c90aa-ab60-430e-ae91-4beb72278609",
+          "size": {
+            "height": 272,
+            "width": 234
+          },
+          "zIndex": 0
+        },
+        {
+          "location": {
+            "x": 2810.3549123384255,
+            "y": 890.46723731245243
+          },
+          "nodeIndex": "Config_Zielwerte",
+          "nodeLineageTag": "15705a7e-383b-4df0-bc98-41c270e02082",
+          "size": {
+            "height": 128,
+            "width": 234
+          },
+          "zIndex": 0
+        },
+        {
+          "location": {
+            "x": 1724.354912338425,
+            "y": 1706.9344746249049
+          },
+          "nodeIndex": "Dim_ForecastStand",
+          "nodeLineageTag": "f0266aec-20bd-4901-bf05-bf7ba5ad1511",
+          "size": {
+            "height": 152,
+            "width": 234
+          },
+          "zIndex": 0
+        },
+        {
+          "location": {
+            "x": 894.38039498455191,
+            "y": -50
+          },
+          "nodeIndex": "Dim_GuV",
+          "nodeLineageTag": "4aa7d885-5d93-4023-a2ee-fd0023c08805",
+          "size": {
+            "height": 300,
+            "width": 234
+          },
+          "zIndex": 0
+        },
+        {
+          "location": {
+            "x": 493.17886946768749,
+            "y": 772.45649002126129
+          },
+          "nodeIndex": "Dim_Kalender",
+          "nodeLineageTag": "874bdd9d-d0a3-4cc8-8c11-18b598407fe3",
+          "size": {
+            "height": 300,
+            "width": 234
+          },
+          "zIndex": 0
+        },
+        {
+          "location": {
+            "x": 1342.9889784363186,
+            "y": 1084.7641834651458
+          },
+          "nodeIndex": "Dim_KeyAccount",
+          "nodeLineageTag": "168da1c7-0d7c-4f12-a33d-f96172401c59",
+          "size": {
+            "height": 176,
+            "width": 234
+          },
+          "zIndex": 0
+        },
+        {
+          "location": {
+            "x": 50,
+            "y": 1333.9759383113023
+          },
+          "nodeIndex": "Dim_Kostenart",
+          "nodeLineageTag": "c0cd3a8a-bcd1-418a-9d26-fb809ca126f5",
+          "size": {
+            "height": 152,
+            "width": 234
+          },
+          "zIndex": 0
+        },
+        {
+          "location": {
+            "x": 207.9475320258598,
+            "y": 675.24243001198647
+          },
+          "nodeIndex": "Dim_Kostenstelle",
+          "nodeLineageTag": "f457570c-6e7b-4917-84ce-671975f2d60d",
+          "size": {
+            "height": 152,
+            "width": 234
+          },
+          "zIndex": 0
+        },
+        {
+          "location": {
+            "x": 1629.9346464653543,
+            "y": 1198.5272966859097
+          },
+          "nodeIndex": "Dim_Produkt",
+          "nodeLineageTag": "62ab450f-358b-427e-804b-8db1c9a897d7",
+          "size": {
+            "height": 176,
+            "width": 234
+          },
+          "zIndex": 0
+        },
+        {
+          "location": {
+            "x": 770.36159043260159,
+            "y": 1469.9957069582501
+          },
+          "nodeIndex": "Dim_Szenario",
+          "nodeLineageTag": "4fcf9a47-9950-4295-8fad-d078aa9ce2d3",
+          "size": {
+            "height": 152,
+            "width": 234
+          },
+          "zIndex": 0
+        },
+        {
+          "location": {
+            "x": 3094.3549123384255,
+            "y": 866.46723731245243
+          },
+          "nodeIndex": "Dim_Treiber",
+          "nodeLineageTag": "35fbea79-dd68-417c-9328-fd3de602e17c",
+          "size": {
+            "height": 176,
+            "width": 234
+          },
+          "zIndex": 0
+        },
+        {
+          "location": {
+            "x": 625.49806396882786,
+            "y": 1673.7341122167616
+          },
+          "nodeIndex": "Dim_Version",
+          "nodeLineageTag": "3a5c8eda-862e-4fdc-8976-805942a2c6e9",
+          "size": {
+            "height": 152,
+            "width": 234
+          },
+          "zIndex": 0
+        },
+        {
+          "location": {
+            "x": 1064.1813162815906,
+            "y": 785.39955237359413
+          },
+          "nodeIndex": "Fact_Absatz_Ist",
+          "nodeLineageTag": "0305a4a7-e2a6-4ed3-8dcf-83aca94b9126",
+          "size": {
+            "height": 248,
+            "width": 234
+          },
+          "zIndex": 0
+        },
+        {
+          "location": {
+            "x": 1055.9677952227032,
+            "y": 1264.8665109638396
+          },
+          "nodeIndex": "Fact_Budget_Absatz",
+          "nodeLineageTag": "08e2822d-40a5-4cc4-a0e8-85c3b9379244",
+          "size": {
+            "height": 272,
+            "width": 234
+          },
+          "zIndex": 0
+        },
+        {
+          "location": {
+            "x": 206.07643822395266,
+            "y": 1058.0727186461177
+          },
+          "nodeIndex": "Fact_Budget_Gemeinkosten",
+          "nodeLineageTag": "fa26426c-973c-4484-bc17-9d8d14fd30c9",
+          "size": {
+            "height": 224,
+            "width": 234
+          },
+          "zIndex": 0
+        },
+        {
+          "location": {
+            "x": 1437.2744043116941,
+            "y": 1427.2589058344661
+          },
+          "nodeIndex": "Fact_Forecast_Absatz",
+          "nodeLineageTag": "949e9238-8077-4de6-84fc-b47eb981c90c",
+          "size": {
+            "height": 248,
+            "width": 234
+          },
+          "zIndex": 0
+        },
+        {
+          "location": {
+            "x": 778.78944977112428,
+            "y": 576.04843649548934
+          },
+          "nodeIndex": "Fact_Gemeinkosten_Ist",
+          "nodeLineageTag": "6deec39d-7359-42e5-b1ef-cda478625413",
+          "size": {
+            "height": 176,
+            "width": 234
+          },
+          "zIndex": 0
+        },
+        {
+          "location": {
+            "x": 614.11404239990452,
+            "y": 300.38226160212139
+          },
+          "nodeIndex": "Fact_Kommentare",
+          "nodeLineageTag": "d07de627-c114-4529-9d11-d553e865809f",
+          "size": {
+            "height": 224,
+            "width": 234
+          },
+          "zIndex": 0
+        },
+        {
+          "location": {
+            "x": 96.538007383560171,
+            "y": 471.24705211233254
+          },
+          "nodeIndex": "Fact_SonstigeErtraege_Ist",
+          "nodeLineageTag": "2455a993-55f9-4d2a-96bd-9243648bab90",
+          "size": {
+            "height": 152,
+            "width": 234
+          },
+          "zIndex": 0
+        },
+        {
+          "location": {},
+          "nodeIndex": "Berechtigung_KeyAccount",
+          "nodeLineageTag": "6a8dbbc2-60c9-49a7-88df-44c6d504dd94",
+          "size": {
+            "height": 176,
+            "width": 234
+          },
+          "zIndex": 0
+        },
+        {
+          "location": {},
+          "nodeIndex": "Dim_KeyAccount_Eingabe",
+          "nodeLineageTag": "95984b6e-793e-4d58-9a17-0e27fb7d1404",
+          "size": {
+            "height": 176,
+            "width": 234
+          },
+          "zIndex": 0
+        }
+      ],
+      "name": "Alle Tabellen",
+      "zoomValue": 100,
+      "pinKeyFieldsToTop": false,
+      "showExtraHeaderInfo": false,
+      "hideKeyFieldsWhenCollapsed": false,
+      "tablesLocked": false
+    },
+    {
+      "ordinal": 1,
+      "scrollPosition": {
+        "x": 9.857142857143117,
+        "y": 3.3333333333333335
+      },
+      "nodes": [
+        {
+          "location": {
+            "x": 208,
+            "y": 23
+          },
+          "nodeIndex": "Dim_Produkt",
+          "nodeLineageTag": "4587f98d-ced6-43f2-ae87-61ba554c7b4c",
+          "size": {
+            "height": 176,
+            "width": 234
+          },
+          "zIndex": 1
+        },
+        {
+          "location": {
+            "x": 54.571428571428555,
+            "y": 344.76190476190482
+          },
+          "nodeIndex": "Fact_Absatz_Ist",
+          "nodeLineageTag": "69258f14-123b-4dfc-b743-e5d50924986f",
+          "size": {
+            "height": 269.42857142857133,
+            "width": 234
+          },
+          "zIndex": 2
+        },
+        {
+          "location": {
+            "x": 506,
+            "y": 29
+          },
+          "nodeIndex": "Dim_KeyAccount",
+          "nodeLineageTag": "77dc2991-ef10-4739-8570-9ccb7bdca551",
+          "size": {
+            "height": 176,
+            "width": 234
+          },
+          "zIndex": 3
+        },
+        {
+          "location": {
+            "x": 891.33333333333348,
+            "y": 42.333333333333329
+          },
+          "nodeIndex": "Dim_Kalender",
+          "nodeLineageTag": "4e7aab0b-74c6-4ac5-9f3e-0b67d79fc0fc",
+          "size": {
+            "height": 104,
+            "width": 234
+          },
+          "zIndex": 4,
+          "expandedHeight": 300
+        },
+        {
+          "location": {
+            "x": 1552.3809523809525,
+            "y": 472.2380952380953
+          },
+          "nodeIndex": "Fact_Gemeinkosten_Ist",
+          "nodeLineageTag": "4c0182c1-5978-476d-9bc0-7c5f64c5410a",
+          "size": {
+            "height": 176,
+            "width": 234
+          },
+          "zIndex": 5
+        },
+        {
+          "location": {
+            "x": 964.19047619047626,
+            "y": 460.00000000000006
+          },
+          "nodeIndex": "Fact_SonstigeErtraege_Ist",
+          "nodeLineageTag": "1b51dffe-9705-4501-be4f-0d2c994077ee",
+          "size": {
+            "height": 152,
+            "width": 234
+          },
+          "zIndex": 6
+        },
+        {
+          "location": {
+            "x": 1504.1904761904759,
+            "y": 49.761904761904674
+          },
+          "nodeIndex": "Dim_Kostenart",
+          "nodeLineageTag": "2c1c8c47-55c0-40ba-9e51-e0c6407cc8b5",
+          "size": {
+            "height": 152,
+            "width": 234
+          },
+          "zIndex": 7
+        },
+        {
+          "location": {
+            "x": 1787.2857142857144,
+            "y": 44.761904761904816
+          },
+          "nodeIndex": "Dim_Kostenstelle",
+          "nodeLineageTag": "ea00189c-83bb-409e-9c3d-1ef90c54ca92",
+          "size": {
+            "height": 152,
+            "width": 234
+          },
+          "zIndex": 8
+        },
+        {
+          "location": {
+            "x": 334.19047619047626,
+            "y": 341.42857142857156
+          },
+          "nodeIndex": "Fact_Budget_Absatz",
+          "nodeLineageTag": "0adc2d7a-0cd5-4a38-bfda-cbafa941e59d",
+          "size": {
+            "height": 272,
+            "width": 234
+          },
+          "zIndex": 9
+        },
+        {
+          "location": {
+            "x": 1820.8571428571431,
+            "y": 462.14285714285717
+          },
+          "nodeIndex": "Fact_Budget_Gemeinkosten",
+          "nodeLineageTag": "c1f56374-e73d-49d0-9dca-3ee3cea53e09",
+          "size": {
+            "height": 200,
+            "width": 234
+          },
+          "zIndex": 16,
+          "expandedHeight": 224
+        },
+        {
+          "location": {
+            "x": 596.33333333333337,
+            "y": 361.66666666666663
+          },
+          "nodeIndex": "Fact_Forecast_Absatz",
+          "nodeLineageTag": "ea1fd3cf-18df-4b91-ba9c-054133424d68",
+          "size": {
+            "height": 248,
+            "width": 234
+          },
+          "zIndex": 10
+        },
+        {
+          "location": {
+            "x": 823,
+            "y": 1055.0000000000002
+          },
+          "nodeIndex": "Dim_Szenario",
+          "nodeLineageTag": "098886c9-0659-491b-8203-ac302bff3a64",
+          "size": {
+            "height": 152,
+            "width": 234
+          },
+          "zIndex": 11
+        },
+        {
+          "location": {
+            "x": 604.66666666666674,
+            "y": 810.00000000000011
+          },
+          "nodeIndex": "Dim_ForecastStand",
+          "nodeLineageTag": "535aa581-05b8-4aa0-b4c5-15f8a9e68eb6",
+          "size": {
+            "height": 152,
+            "width": 234
+          },
+          "zIndex": 12
+        },
+        {
+          "location": {
+            "x": 1089.6666666666667,
+            "y": 1055.0000000000002
+          },
+          "nodeIndex": "Dim_Version",
+          "nodeLineageTag": "b8f2ecfc-c56a-4510-9945-c520eb9b4510",
+          "size": {
+            "height": 152,
+            "width": 234
+          },
+          "zIndex": 13
+        },
+        {
+          "location": {
+            "x": 1179.6666666666667,
+            "y": 33.333333333333371
+          },
+          "nodeIndex": "Dim_GuV",
+          "nodeLineageTag": "b2273419-308f-4a05-aec2-e83bc865690f",
+          "size": {
+            "height": 104,
+            "width": 234
+          },
+          "zIndex": 14,
+          "expandedHeight": 300
+        },
+        {
+          "location": {
+            "x": 1221.3333333333335,
+            "y": 466.66666666666663
+          },
+          "nodeIndex": "Fact_Kommentare",
+          "nodeLineageTag": "476e92ae-93b2-4ac8-bc65-2a16717a6ef4",
+          "size": {
+            "height": 224,
+            "width": 234
+          },
+          "zIndex": 15
+        }
+      ],
+      "name": "Modell",
+      "zoomValue": 60,
+      "pinKeyFieldsToTop": true,
+      "showExtraHeaderInfo": false,
+      "hideKeyFieldsWhenCollapsed": false,
+      "tablesLocked": false
+    }
+  ],
+  "selectedDiagram": "Modell",
+  "defaultDiagram": "Alle Tabellen"
+}

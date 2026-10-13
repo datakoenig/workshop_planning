@@ -1,0 +1,81 @@
+table Dim_Kalender
+	lineageTag: 4e7aab0b-74c6-4ac5-9f3e-0b67d79fc0fc
+
+	column Periode
+		dataType: string
+		lineageTag: 46e5b32a-ff09-4d32-b486-580a362b139b
+		summarizeBy: none
+		sourceColumn: Periode
+
+	column Datum
+		dataType: dateTime
+		formatString: dd.MM.yyyy
+		lineageTag: 7b78f4d9-f002-45e8-9615-c3f9ba8f7051
+		summarizeBy: none
+		sourceColumn: Datum
+
+	column Jahr
+		dataType: int64
+		formatString: 0
+		lineageTag: a9b5938a-0549-428a-9c36-e74e23a59967
+		summarizeBy: none
+		sourceColumn: Jahr
+
+	column Monat
+		dataType: int64
+		formatString: #,0
+		lineageTag: d35da8b6-f8c0-4ac6-b570-b2f75cd3a26a
+		summarizeBy: none
+		sourceColumn: Monat
+
+	column MonatName
+		dataType: string
+		lineageTag: 75d82372-c3a5-43b0-8380-2a3ba7ee7d3b
+		summarizeBy: none
+		sourceColumn: MonatName
+		sortByColumn: Monat
+
+	column Quartal
+		dataType: string
+		lineageTag: 1243ca83-1b1b-4c07-ae53-4c6ab9d327cf
+		summarizeBy: none
+		sourceColumn: Quartal
+
+	column Status
+		dataType: string
+		lineageTag: b801c284-4ac5-40f6-9fb4-6aef72453355
+		summarizeBy: none
+		sourceColumn: Status
+
+	column Monatsbeginn
+		dataType: dateTime
+		formatString: dd.MM.yyyy
+		lineageTag: d470bc4a-2278-4aa2-a54e-fc7e0cc7b9d8
+		summarizeBy: none
+		sourceColumn: Monatsbeginn
+
+	hierarchy Zeit
+		lineageTag: d5f63947-b533-42eb-bd00-85d4317d0c10
+
+		level Jahr
+			lineageTag: c24ff4e2-7865-4f13-82b7-5d56b2f61710
+			column: Jahr
+
+		level Quartal
+			lineageTag: 7541f5a6-d96f-4a31-a067-033e94d3372f
+			column: Quartal
+
+		level Monat
+			lineageTag: 6063a0f3-db13-40f2-9aa1-c80ae4a90466
+			column: MonatName
+
+	partition Dim_Kalender = m
+		mode: import
+		source =
+				let
+				    Quelle = Csv.Document(File.Contents(Ordner & "Dim_Kalender.csv"), [Delimiter = ",", Encoding = 65001, QuoteStyle = QuoteStyle.Csv]),
+				    Header = Table.PromoteHeaders(Quelle, [PromoteAllScalars = true]),
+				    Typen = Table.TransformColumnTypes(Header, {{"Periode", type text}, {"Datum", type datetime}, {"Monatsbeginn", type datetime}, {"Jahr", Int64.Type}, {"Monat", Int64.Type}, {"MonatName", type text}, {"Quartal", type text}, {"Status", type text}}, "en-US")
+				in
+				    Typen
+

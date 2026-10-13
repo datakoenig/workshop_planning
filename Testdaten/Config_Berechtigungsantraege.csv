@@ -1,0 +1,4 @@
+﻿AntragID,Benutzer,Planungsbereich,Ebene,Wert,Begruendung,Status,Freigabe_durch,Freigabe_am
+1,vertrieb.nord@demo.local,Vertrieb,Region,Deutschland / Süd,Vertretung Kollege,beantragt,,
+2,vertrieb.west@demo.local,Vertrieb,KeyAccount,KA12,Neuer Kunde in Betreuung,freigegeben,manager.ch@demo.local,2026-09-15
+3,vertrieb.at@demo.local,Vertrieb,Region,Deutschland / Nord,,abgelehnt,manager.de@demo.local,2026-09-20

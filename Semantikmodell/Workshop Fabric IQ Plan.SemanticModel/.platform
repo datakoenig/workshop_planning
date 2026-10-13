@@ -1,0 +1,11 @@
+{
+  "$schema": "https://developer.microsoft.com/json-schemas/fabric/gitIntegration/platformProperties/2.0.0/schema.json",
+  "metadata": {
+    "type": "SemanticModel",
+    "displayName": "Workshop Fabric IQ Plan"
+  },
+  "config": {
+    "version": "2.0",
+    "logicalId": "56651167-72c5-4c0b-a9b6-8227dac7c783"
+  }
+}

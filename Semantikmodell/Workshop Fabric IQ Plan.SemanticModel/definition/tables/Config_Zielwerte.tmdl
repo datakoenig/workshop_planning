@@ -1,0 +1,26 @@
+table Config_Zielwerte
+	lineageTag: 4014df49-1626-4377-8488-c397771d3115
+
+	column Produktgruppe
+		dataType: string
+		lineageTag: 532f3a5f-81d5-4ab0-9a35-6587fb93f613
+		summarizeBy: none
+		sourceColumn: Produktgruppe
+
+	column Ziel_Umsatzrendite
+		dataType: double
+		formatString: #,0.00
+		lineageTag: e41653e3-1f75-455e-a564-b64b3c089dd4
+		summarizeBy: none
+		sourceColumn: Ziel_Umsatzrendite
+
+	partition Config_Zielwerte = m
+		mode: import
+		source =
+				let
+				    Quelle = Csv.Document(File.Contents(Ordner & "Config_Zielwerte.csv"), [Delimiter = ",", Encoding = 65001, QuoteStyle = QuoteStyle.Csv]),
+				    Header = Table.PromoteHeaders(Quelle, [PromoteAllScalars = true]),
+				    Typen = Table.TransformColumnTypes(Header, {{"Produktgruppe", type text}, {"Ziel_Umsatzrendite", type number}}, "en-US")
+				in
+				    Typen
+

@@ -1,0 +1,43 @@
+table Config_Berechtigungen
+	lineageTag: fb11f76f-c5c6-4c86-8b53-8f49ccd61176
+
+	column Benutzer
+		dataType: string
+		lineageTag: 81362830-d26f-477e-9fdf-4dec88110352
+		summarizeBy: none
+		sourceColumn: Benutzer
+
+	column Planungsbereich
+		dataType: string
+		lineageTag: ac6f4e5d-edb9-4974-b926-074503592d26
+		summarizeBy: none
+		sourceColumn: Planungsbereich
+
+	column Recht
+		dataType: string
+		lineageTag: 07b32b72-8886-4c48-9559-dd5ef17f3bd6
+		summarizeBy: none
+		sourceColumn: Recht
+
+	column Ebene
+		dataType: string
+		lineageTag: cca6ede3-76de-473f-a86d-cb361e1c6060
+		summarizeBy: none
+		sourceColumn: Ebene
+
+	column Wert
+		dataType: string
+		lineageTag: 52c2c443-cc91-42f7-af3a-45eb611191bb
+		summarizeBy: none
+		sourceColumn: Wert
+
+	partition Config_Berechtigungen = m
+		mode: import
+		source =
+				let
+				    Quelle = Csv.Document(File.Contents(Ordner & "Config_Berechtigungen.csv"), [Delimiter = ",", Encoding = 65001, QuoteStyle = QuoteStyle.Csv]),
+				    Header = Table.PromoteHeaders(Quelle, [PromoteAllScalars = true]),
+				    Typen = Table.TransformColumnTypes(Header, {{"Benutzer", type text}, {"Planungsbereich", type text}, {"Recht", type text}, {"Ebene", type text}, {"Wert", type text}}, "en-US")
+				in
+				    Typen
+

@@ -1,0 +1,212 @@
+{
+  "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/1.0.0/schema.json",
+  "name": "7afab326ebac4ada8182",
+  "position": {
+    "x": 30,
+    "y": 540,
+    "z": 0,
+    "width": 1860,
+    "height": 510
+  },
+  "visual": {
+    "visualType": "tableEx",
+    "query": {
+      "queryState": {
+        "Values": {
+          "projections": [
+            {
+              "field": {
+                "Column": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "Config_Berechtigungsantraege"
+                    }
+                  },
+                  "Property": "AntragID"
+                }
+              },
+              "queryRef": "Config_Berechtigungsantraege.AntragID",
+              "nativeQueryRef": "AntragID"
+            },
+            {
+              "field": {
+                "Column": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "Config_Berechtigungsantraege"
+                    }
+                  },
+                  "Property": "Benutzer"
+                }
+              },
+              "queryRef": "Config_Berechtigungsantraege.Benutzer",
+              "nativeQueryRef": "Benutzer"
+            },
+            {
+              "field": {
+                "Column": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "Config_Berechtigungsantraege"
+                    }
+                  },
+                  "Property": "Planungsbereich"
+                }
+              },
+              "queryRef": "Config_Berechtigungsantraege.Planungsbereich",
+              "nativeQueryRef": "Planungsbereich"
+            },
+            {
+              "field": {
+                "Column": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "Config_Berechtigungsantraege"
+                    }
+                  },
+                  "Property": "Ebene"
+                }
+              },
+              "queryRef": "Config_Berechtigungsantraege.Ebene",
+              "nativeQueryRef": "Ebene"
+            },
+            {
+              "field": {
+                "Column": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "Config_Berechtigungsantraege"
+                    }
+                  },
+                  "Property": "Wert"
+                }
+              },
+              "queryRef": "Config_Berechtigungsantraege.Wert",
+              "nativeQueryRef": "Wert"
+            },
+            {
+              "field": {
+                "Column": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "Config_Berechtigungsantraege"
+                    }
+                  },
+                  "Property": "Begruendung"
+                }
+              },
+              "queryRef": "Config_Berechtigungsantraege.Begruendung",
+              "nativeQueryRef": "Begruendung"
+            },
+            {
+              "field": {
+                "Column": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "Config_Berechtigungsantraege"
+                    }
+                  },
+                  "Property": "Status"
+                }
+              },
+              "queryRef": "Config_Berechtigungsantraege.Status",
+              "nativeQueryRef": "Status"
+            },
+            {
+              "field": {
+                "Column": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "Config_Berechtigungsantraege"
+                    }
+                  },
+                  "Property": "Freigabe_durch"
+                }
+              },
+              "queryRef": "Config_Berechtigungsantraege.Freigabe_durch",
+              "nativeQueryRef": "Freigabe_durch"
+            },
+            {
+              "field": {
+                "Column": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "Config_Berechtigungsantraege"
+                    }
+                  },
+                  "Property": "Freigabe_am"
+                }
+              },
+              "queryRef": "Config_Berechtigungsantraege.Freigabe_am",
+              "nativeQueryRef": "Freigabe_am"
+            }
+          ]
+        }
+      }
+    },
+    "drillFilterOtherVisuals": true,
+    "visualContainerObjects": {
+      "title": [
+        {
+          "properties": {
+            "text": {
+              "expr": {
+                "Literal": {
+                  "Value": "'Berechtigungsanträge'"
+                }
+              }
+            },
+            "show": {
+              "expr": {
+                "Literal": {
+                  "Value": "true"
+                }
+              }
+            }
+          }
+        }
+      ]
+    },
+    "objects": {
+      "columnHeaders": [
+        {
+          "properties": {
+            "fontSize": {
+              "expr": {
+                "Literal": {
+                  "Value": "12D"
+                }
+              }
+            }
+          }
+        }
+      ],
+      "values": [
+        {
+          "properties": {
+            "fontSize": {
+              "expr": {
+                "Literal": {
+                  "Value": "12D"
+                }
+              }
+            }
+          }
+        }
+      ],
+      "total": [
+        {
+          "properties": {
+            "fontSize": {
+              "expr": {
+                "Literal": {
+                  "Value": "12D"
+                }
+              }
+            }
+          }
+        }
+      ]
+    }
+  }
+}

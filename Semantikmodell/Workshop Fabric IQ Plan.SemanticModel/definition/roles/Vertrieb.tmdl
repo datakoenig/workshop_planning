@@ -1,0 +1,31 @@
+role Vertrieb
+	modelPermission: read
+
+	tablePermission Dim_KeyAccount =
+			-- Lesen: Key Accounts, für die der angemeldete Nutzer ein Leserecht im Planungsbereich Vertrieb hat
+			Dim_KeyAccount[KeyAccountID]
+			    IN SELECTCOLUMNS (
+			        FILTER (
+			            ALL ( Berechtigung_KeyAccount ),
+			            Berechtigung_KeyAccount[Benutzer] = USERPRINCIPALNAME ()
+			                && Berechtigung_KeyAccount[Planungsbereich] = "Vertrieb"
+			                && Berechtigung_KeyAccount[Recht] = "Lesen"
+			        ),
+			        "k", Berechtigung_KeyAccount[KeyAccountID]
+			    )
+
+	tablePermission Dim_KeyAccount_Eingabe =
+			-- Schreiben: Key Accounts, für die der angemeldete Nutzer ein Schreibrecht im Planungsbereich Vertrieb hat (Zeilen des Eingabe-Sheets)
+			Dim_KeyAccount_Eingabe[KeyAccountID]
+			    IN SELECTCOLUMNS (
+			        FILTER (
+			            ALL ( Berechtigung_KeyAccount ),
+			            Berechtigung_KeyAccount[Benutzer] = USERPRINCIPALNAME ()
+			                && Berechtigung_KeyAccount[Planungsbereich] = "Vertrieb"
+			                && Berechtigung_KeyAccount[Recht] = "Schreiben"
+			        ),
+			        "k", Berechtigung_KeyAccount[KeyAccountID]
+			    )
+
+	annotation PBI_Id = 0d48b20b52d64c70a9a294064c4b0ea3
+

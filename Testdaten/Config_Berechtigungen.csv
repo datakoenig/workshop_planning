@@ -1,0 +1,19 @@
+﻿Benutzer,Planungsbereich,Recht,Ebene,Wert
+einkauf@demo.local,Vertrieb,Lesen,Gesamt,*
+einkauf@demo.local,Material,Schreiben,Gesamt,*
+hr@demo.local,Vertrieb,Lesen,Gesamt,*
+hr@demo.local,Personal,Schreiben,Gesamt,*
+vertrieb.nord@demo.local,Vertrieb,Lesen,Land,Deutschland
+vertrieb.nord@demo.local,Vertrieb,Schreiben,Region,Deutschland / Nord
+vertrieb.west@demo.local,Vertrieb,Lesen,Land,Deutschland
+vertrieb.west@demo.local,Vertrieb,Schreiben,Region,Deutschland / West
+vertrieb.ka03@demo.local,Vertrieb,Lesen,Land,Deutschland
+vertrieb.ka03@demo.local,Vertrieb,Schreiben,KeyAccount,KA03
+vertrieb.at@demo.local,Vertrieb,Lesen,Land,Österreich
+vertrieb.at@demo.local,Vertrieb,Schreiben,Region,Österreich / Ost
+manager.de@demo.local,Vertrieb,Lesen,Land,Deutschland
+manager.de@demo.local,Vertrieb,Schreiben,Land,Deutschland
+manager.ch@demo.local,Vertrieb,Lesen,Land,Schweiz
+manager.ch@demo.local,Vertrieb,Schreiben,Land,Schweiz
+Artur@biordie.com,Vertrieb,Lesen,Gesamt,*
+Artur@biordie.com,Vertrieb,Schreiben,Region,Deutschland / Nord

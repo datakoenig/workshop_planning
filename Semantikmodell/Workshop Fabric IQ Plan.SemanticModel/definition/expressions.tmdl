@@ -1,0 +1,5 @@
+expression Ordner = "C:\Users\artur\OneDrive\Dokumente\Claude\Projects\Workshop Fabric Plan\Testdaten\" meta [IsParameterQuery = true, Type = "Text", IsParameterQueryRequired = true]
+	lineageTag: 6ba27cdc-cd2d-42dc-91d8-a9da51b7b7cf
+
+	annotation PBI_ResultType = Text
+

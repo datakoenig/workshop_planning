@@ -1,0 +1,32 @@
+table Fact_SonstigeErtraege_Ist
+	lineageTag: 1b51dffe-9705-4501-be4f-0d2c994077ee
+
+	column Periode
+		dataType: string
+		lineageTag: aeca36e6-b59f-4cd7-a3af-33cab3a5eceb
+		summarizeBy: none
+		sourceColumn: Periode
+
+	column GuVZeileID
+		dataType: string
+		lineageTag: 3f85d619-e9f6-49e5-9333-554625695a9b
+		summarizeBy: none
+		sourceColumn: GuVZeileID
+
+	column Betrag
+		dataType: double
+		formatString: #,0.00
+		lineageTag: 4336f326-a419-463e-b0d7-32015487343c
+		summarizeBy: sum
+		sourceColumn: Betrag
+
+	partition Fact_SonstigeErtraege_Ist = m
+		mode: import
+		source =
+				let
+				    Quelle = Csv.Document(File.Contents(Ordner & "Fact_SonstigeErtraege_Ist.csv"), [Delimiter = ",", Encoding = 65001, QuoteStyle = QuoteStyle.Csv]),
+				    Header = Table.PromoteHeaders(Quelle, [PromoteAllScalars = true]),
+				    Typen = Table.TransformColumnTypes(Header, {{"Periode", type text}, {"GuVZeileID", type text}, {"Betrag", type number}}, "en-US")
+				in
+				    Typen
+

@@ -1,0 +1,96 @@
+relationship 083ec075-8679-4780-8dfc-457fbf824869
+	fromColumn: Fact_Absatz_Ist.Periode
+	toColumn: Dim_Kalender.Periode
+
+relationship 21847af2-30ad-48e0-b2a8-2d06bca766c0
+	fromColumn: Fact_Absatz_Ist.KeyAccountID
+	toColumn: Dim_KeyAccount.KeyAccountID
+
+relationship 6267d8b5-64ef-488c-bd7c-83b4b8ec958a
+	fromColumn: Fact_Absatz_Ist.ProduktID
+	toColumn: Dim_Produkt.ProduktID
+
+relationship 8a9b532b-19cc-4528-86ba-da867c51cc83
+	fromColumn: Fact_Gemeinkosten_Ist.Periode
+	toColumn: Dim_Kalender.Periode
+
+relationship d73ee97f-aab1-41f2-a84e-d2eb238cb9c1
+	fromColumn: Fact_Gemeinkosten_Ist.KostenstelleID
+	toColumn: Dim_Kostenstelle.KostenstelleID
+
+relationship 3502fd93-badb-4e0f-a78a-c719096fcb85
+	fromColumn: Fact_Gemeinkosten_Ist.KostenartID
+	toColumn: Dim_Kostenart.KostenartID
+
+relationship de852769-41e9-4f01-bb0d-946532b7e4d9
+	fromColumn: Fact_SonstigeErtraege_Ist.Periode
+	toColumn: Dim_Kalender.Periode
+
+relationship 0d5e2ff9-41aa-4cee-9c6a-7aeb89950e31
+	fromColumn: Fact_SonstigeErtraege_Ist.GuVZeileID
+	toColumn: Dim_GuV.GuVZeileID
+
+relationship df319a22-e7f9-47c5-a093-9d88eca3402a
+	fromColumn: Fact_Budget_Absatz.Periode
+	toColumn: Dim_Kalender.Periode
+
+relationship a433ce3a-d7e3-4da1-b73f-06703043efd6
+	fromColumn: Fact_Budget_Absatz.Szenario
+	toColumn: Dim_Szenario.Szenario
+
+relationship a5ba267b-7769-4495-9a55-7195a42190e5
+	fromColumn: Fact_Budget_Absatz.Version
+	toColumn: Dim_Version.Version
+
+relationship fa6dd267-f9f1-4c57-8f73-4a464e0b3548
+	fromColumn: Fact_Budget_Absatz.KeyAccountID
+	toColumn: Dim_KeyAccount.KeyAccountID
+
+relationship afc8e70b-acc0-49ed-860e-26654b18190c
+	fromColumn: Fact_Budget_Absatz.ProduktID
+	toColumn: Dim_Produkt.ProduktID
+
+relationship fe2c92df-ca6e-4394-8add-6e8361aa93f0
+	fromColumn: Fact_Budget_Gemeinkosten.Periode
+	toColumn: Dim_Kalender.Periode
+
+relationship dee40976-4808-4194-9cd6-1c8169bebed3
+	fromColumn: Fact_Budget_Gemeinkosten.Szenario
+	toColumn: Dim_Szenario.Szenario
+
+relationship 7a6fed8b-1bca-4bd2-af89-724fab69aa7f
+	fromColumn: Fact_Budget_Gemeinkosten.Version
+	toColumn: Dim_Version.Version
+
+relationship d69b551b-87d7-47b1-a65e-483021560397
+	fromColumn: Fact_Budget_Gemeinkosten.KostenstelleID
+	toColumn: Dim_Kostenstelle.KostenstelleID
+
+relationship c3c873e3-32dd-4370-9366-74f241f38bf3
+	fromColumn: Fact_Budget_Gemeinkosten.KostenartID
+	toColumn: Dim_Kostenart.KostenartID
+
+relationship f47fc1b6-1c42-449e-aca0-2e30f3ecd460
+	fromColumn: Fact_Forecast_Absatz.Periode
+	toColumn: Dim_Kalender.Periode
+
+relationship 526b36e0-d853-4392-8368-b9a0137fed65
+	fromColumn: Fact_Forecast_Absatz.ForecastStand
+	toColumn: Dim_ForecastStand.ForecastStand
+
+relationship 451039da-6226-4497-9aeb-3e8b8ad86cfd
+	fromColumn: Fact_Forecast_Absatz.KeyAccountID
+	toColumn: Dim_KeyAccount.KeyAccountID
+
+relationship a7050e03-af48-42de-a3dc-e0da74405013
+	fromColumn: Fact_Forecast_Absatz.ProduktID
+	toColumn: Dim_Produkt.ProduktID
+
+relationship 7239ecf3-51f5-4000-916f-5748ce6dba4d
+	fromColumn: Fact_Kommentare.Periode
+	toColumn: Dim_Kalender.Periode
+
+relationship 0416e4ce-cb9b-48d0-bdd9-85428fa93470
+	fromColumn: Fact_Kommentare.GuVZeileID
+	toColumn: Dim_GuV.GuVZeileID
+

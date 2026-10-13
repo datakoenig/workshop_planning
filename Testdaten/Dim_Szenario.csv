@@ -1,0 +1,4 @@
+﻿Szenario,Sortierung,IstDefault
+Pessimistisch,1,False
+Base,2,True
+Optimistisch,3,False

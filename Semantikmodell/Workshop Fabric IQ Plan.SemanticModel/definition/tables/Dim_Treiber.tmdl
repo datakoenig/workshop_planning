@@ -1,0 +1,37 @@
+table Dim_Treiber
+	lineageTag: caf59205-1e9e-4bc6-b8c5-537dab5d37ea
+
+	column Treiber
+		dataType: string
+		lineageTag: 71e95202-04f6-4fc0-b150-8569a80dc249
+		summarizeBy: none
+		sourceColumn: Treiber
+
+	column Formel
+		dataType: string
+		lineageTag: ce4e0454-ae11-4ff5-886d-58c8153e87b1
+		summarizeBy: none
+		sourceColumn: Formel
+
+	column Typ
+		dataType: string
+		lineageTag: b35be5ae-0bc5-46c6-a84d-bfb84a8a3ed4
+		summarizeBy: none
+		sourceColumn: Typ
+
+	column Einheit
+		dataType: string
+		lineageTag: 519f1392-b642-4a3d-bc96-62a4b2d56798
+		summarizeBy: none
+		sourceColumn: Einheit
+
+	partition Dim_Treiber = m
+		mode: import
+		source =
+				let
+				    Quelle = Csv.Document(File.Contents(Ordner & "Dim_Treiber.csv"), [Delimiter = ",", Encoding = 65001, QuoteStyle = QuoteStyle.Csv]),
+				    Header = Table.PromoteHeaders(Quelle, [PromoteAllScalars = true]),
+				    Typen = Table.TransformColumnTypes(Header, {{"Treiber", type text}, {"Formel", type text}, {"Typ", type text}, {"Einheit", type text}}, "en-US")
+				in
+				    Typen
+

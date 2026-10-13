@@ -1,0 +1,42 @@
+model Model
+	culture: de-DE
+	defaultPowerBIDataSourceVersion: powerBI_V3
+	sourceQueryCulture: de-DE
+	dataAccessOptions
+		legacyRedirects
+		returnErrorValuesAsNull
+
+annotation __PBI_TimeIntelligenceEnabled = 0
+
+annotation PBI_QueryOrder = ["Ordner", "Dim_Kalender", "Dim_KeyAccount", "Dim_Produkt", "Dim_Kostenstelle", "Dim_Kostenart", "Dim_GuV", "Dim_Szenario", "Dim_Version", "Dim_ForecastStand", "Dim_Treiber", "Fact_Absatz_Ist", "Fact_Gemeinkosten_Ist", "Fact_SonstigeErtraege_Ist", "Fact_Budget_Absatz", "Fact_Budget_Gemeinkosten", "Fact_Forecast_Absatz", "Fact_Kommentare", "Config_Berechtigungen", "Config_Berechtigungsantraege", "Config_Zielwerte", "Berechtigung_KeyAccount", "Dim_KeyAccount_Eingabe"]
+
+annotation PBI_ProTooling = ["DevMode"]
+
+ref table Dim_Kalender
+ref table Dim_KeyAccount
+ref table Dim_Produkt
+ref table Dim_Kostenstelle
+ref table Dim_Kostenart
+ref table Dim_GuV
+ref table Dim_Szenario
+ref table Dim_Version
+ref table Dim_ForecastStand
+ref table Dim_Treiber
+ref table Fact_Absatz_Ist
+ref table Fact_Gemeinkosten_Ist
+ref table Fact_SonstigeErtraege_Ist
+ref table Fact_Budget_Absatz
+ref table Fact_Budget_Gemeinkosten
+ref table Fact_Forecast_Absatz
+ref table Fact_Kommentare
+ref table Config_Berechtigungen
+ref table Config_Berechtigungsantraege
+ref table Config_Zielwerte
+ref table Kennzahlen
+ref table Berechtigung_KeyAccount
+ref table Dim_KeyAccount_Eingabe
+
+ref role Vertrieb
+
+ref cultureInfo de-DE
+
